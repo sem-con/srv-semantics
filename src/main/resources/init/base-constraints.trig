@@ -1,0 +1,97 @@
+@prefix : <http://semantics.id/ns/semcon#> .
+@prefix scr: <http://semantics.id/ns/sc-resource/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix w3c-format: <http://www.w3.org/ns/formats/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+#################################################################
+#    NAMED GRAPH ==> :SystemConstraints
+# 	 SHACL constraints for the overall structure of data / aggregated data (to validate container description)
+#################################################################
+scr:ContainerConfigurationConstraints 
+    a               sh:NodeShape ;
+    sh:closed       true ;
+    sh:description  "ContainerConfiguration validation" ;
+    sh:name         "ContainerConfiguration validation" ;
+    sh:property     [ sh:maxCount  1 ;
+                      sh:minCount  1 ;
+                      sh:path      rdf:type
+                    ] ;
+    sh:property     [ sh:maxCount  1 ;
+                      sh:minCount  1 ;
+                      sh:path      dc:title
+                    ] ;
+    sh:property     [ sh:minCount  1 ;
+                      sh:path      dc:description
+                    ] ;
+    sh:property     [ sh:minCount  1 ;
+                      sh:path      dc:creator
+                    ] ;
+    sh:property     [ sh:minCount  0 ;
+                      sh:path      dc:contributor
+                    ] ;
+    sh:property     [ sh:dataType :DataConfiguration ;
+    				  sh:maxCount  1 ;
+    				  sh:minCount  0 ;
+                      sh:path      :hasDataConfiguration
+                    ] ;
+# -- FOR LATER
+#    sh:property     [ sh:dataType :DataLayer ;
+#    				  sh:maxCount  1 ;
+#    				  sh:minCount  1 ;
+#                      sh:path      :hasDataLayer
+#                    ] ;
+    sh:targetClass  :ContainerConfiguration .
+
+
+scr:DataConfigurationConstraints 
+    a               sh:NodeShape ;
+    sh:closed       true ;
+    sh:description  "DataConfiguration validation" ;
+    sh:name         "DataConfiguration validation" ;
+    sh:property     [ sh:maxCount  1 ;
+                      sh:minCount  1 ;
+                      sh:path      rdf:type
+                    ] ;
+# -- FOR LATER
+#    sh:property     [ sh:dataType xsd:boolean ;
+#    				  sh:maxCount  1 ;
+#    				  sh:minCount  1 ;
+#                      sh:path      :isDataModelExist
+#                    ] ;
+#    sh:property     [ sh:dataType xsd:boolean ;
+#    				  sh:maxCount  1 ;
+#    				  sh:minCount  1 ;
+#                      sh:path      :isDataConstraintExist
+#                    ] ;
+#    sh:property     [ sh:dataType xsd:boolean ;
+#    				  sh:maxCount  1 ;
+#    				  sh:minCount  1 ;
+#                      sh:path      :isDataMappingExist
+#                    ] ;
+#    sh:property     [ sh:dataType xsd:boolean ;
+#    				  sh:maxCount  1 ;
+#    				  sh:minCount  1 ;
+#    				  sh:hasValue true ;
+#                      sh:path      :isUsagePolicyExist
+#                    ] ;
+    sh:property     [ sh:minCount  1 ;
+                      sh:path      :hasTag
+                    ] ;
+    sh:property     [ sh:maxCount  1 ;
+    				  sh:minCount  1 ;
+                      sh:path      :hasNativeSyntax
+                    ] ;
+    sh:property     [ sh:maxCount  1 ;
+    				  sh:minCount  1 ;
+                      sh:path      :hasExampleData
+                    ] ;
+    sh:targetClass  :DataConfiguration .
+
+
+

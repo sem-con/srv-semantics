@@ -1,0 +1,171 @@
+@prefix : <http://semantics.id/ns/semcon#> .
+@prefix scr: <http://semantics.id/ns/sc-resource/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix w3c-format: <http://www.w3.org/ns/formats/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix step: <http://semantics.id/ns/stepcount#> .
+@prefix svpr:  <http://www.specialprivacy.eu/vocabs/processing#> .
+@prefix svpu:  <http://www.specialprivacy.eu/vocabs/purposes#> .
+@prefix svd:   <http://www.specialprivacy.eu/vocabs/data#> .
+@prefix svdu:  <http://www.specialprivacy.eu/vocabs/duration#> .
+@prefix svl:   <https://www.specialprivacy.eu/vocabs/locations#> .
+@prefix svr:   <https://www.specialprivacy.eu/vocabs/recipients#> .
+@prefix spl:   <https://www.specialprivacy.eu/langs/usage-policy#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+#################################################################
+#    NAMED GRAPH ==> :UserConfigurations
+#################################################################
+:InitialConfiguration {
+
+	:ContainerConfigurationInstance rdf:type :ContainerConfiguration ;
+		# generic - dublin core
+		dc:title "Step Count Container" ;
+		dc:description """
+				This container contains information about step count
+			""" ;
+		dc:creator [
+			rdf:type foaf:Person ;
+			foaf:name "Christoph Fabianek" ;
+			foaf:mbox <mailto:christoph.fabianek@gmail.com> ;
+		] ;
+		dc:contributor [
+			rdf:type foaf:Organization ;
+			foaf:name "OwnYourData" ;
+			foaf:mbox <mailto:christoph.fabianek@gmail.com> ;
+		] , [
+			rdf:type foaf:Person ;
+			foaf:name "Fajar Ekaputra" ;
+			foaf:mbox <mailto:fajar@juang.id> ;
+		] ;
+		:hasDataConfiguration :StepCountData .
+		# :hasDataLayer scr:LayerSemantic ;		# NON-EDITABLE - assigned
+
+	:DataConfigurationInstance rdf:type :DataConfiguration ;	
+		# :isDataModelExist true ;				# NON-EDITABLE - assigned
+		# :isDataConstraintExist true ;			# NON-EDITABLE - assigned
+		# :isDataMappingExist false ;			# NON-EDITABLE - assigned
+		# :isUsagePolicyExist true ;			# NON-EDITABLE - assigned
+		# data - classifications
+		:hasTag "Step Count", "Health", "Gyroscope" ;
+		# data format - inspired from void
+		:hasNativeSyntax w3c-format:Turtle ;
+		# example data in plain string
+		:hasExampleData """
+			@prefix step: <http://semantics.id/ns/stepcount#> .
+			@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+			[] rdf:type step:StepCount ;
+				step:date "2018-06-17" ;
+				step:value "2345" .
+
+			[] rdf:type step:StepCount ;
+				step:date "2018-06-18" ;
+				step:value "7502" .
+			"""	.			
+}
+
+#################################################################
+#    NAMED GRAPH ==> :UsagePolicies
+#################################################################
+:UsagePolicy {
+	:ContainerPolicy rdf:type owl:Class ; # this line should not be changed!
+		owl:equivalentClass [ 
+			owl:intersectionOf ( 
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasData ;
+					owl:someValuesFrom svd:Financial
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasProcessing ;
+					owl:someValuesFrom spl:AnyProcessing
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasPurpose ;
+					owl:someValuesFrom spl:AnyPurpose
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasRecipient ;
+					owl:someValuesFrom spl:AnyRecipient
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasStorage ;
+					owl:someValuesFrom spl:AnyStorage
+				]
+			) ;
+			rdf:type owl:Class
+		] .
+}
+	
+#################################################################
+#    NAMED GRAPH ==> :DataModels
+#################################################################
+:DataModel {
+	# I have a single class, called StepCount
+	step:StepCount a owl:Class .
+
+	# each step count has a maximum of one date property of type xsd:date
+	step:date a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain step:StepCount ;
+		rdfs:range xsd:date .
+
+	# each step count has a maximum of one value property of type xsd:integer
+	step:value a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain step:StepCount ;
+		rdfs:range xsd:integer .
+}
+
+#################################################################
+#    NAMED GRAPH ==> :DataConstraints
+#################################################################
+:DataConstraint {
+	scr:StepCountShape a sh:NodeShape ;
+		sh:name "StepCount data constraints" ;
+		sh:targetClass: step:StepCount ;
+		sh:description "Example data constraints for StepCount data" ;
+		sh:closed true ;
+		sh:property [
+			sh:path step:date ;
+			sh:dataType xsd:dateTime ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path step:value ;
+			sh:dataType xsd:integer ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+			sh:minValue 0 ;
+		] ;
+		sh:property [
+			sh:path rdf:type ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] .
+}
+
+#################################################################
+#    NAMED GRAPH ==> :DataMappings (Future)
+#################################################################
+:DataMapping {
+
+}
+
+#################################################################
+#    NAMED GRAPH ==> :UserFunctions - Hydra function definitions (Future)
+#################################################################
+:UserFunction {
+
+}
+
+
