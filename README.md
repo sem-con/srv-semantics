@@ -3,7 +3,7 @@ version 1.1.0 (17.12.2018)
 * `mvn clean install`
 * `java -jar target/validation-service-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
-## Semantic Container
+## About Semantic Containers
 Semantic Containers enable secure and traceable data exchange between 2 parties.  
 more infos and documentation: https://ownyourdata.eu/en/semcon
 
