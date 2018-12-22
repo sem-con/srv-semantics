@@ -93,5 +93,17 @@ scr:DataConfigurationConstraints
                     ] ;
     sh:targetClass  :DataConfiguration .
 
+#################################################################
+#    NAMED GRAPH ==> :UserFunctions - Hydra function definitions (Future)
+#################################################################
+:BaseConfiguration {
+    :BaseConfigurationInstance rdf:type :BaseConfiguration ;
+        # usage policy matching service
+        :usagePolicyValidationService "https://semantics.ownyourdata.eu/api/validate/usage-policy" ;
+        # init validation service
+        :initValidationService "https://semantics.ownyourdata.eu/api/validate/init" ;
+    .
+}
+
 
 
