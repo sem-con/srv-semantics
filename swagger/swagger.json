@@ -1,0 +1,124 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This API provides common semantic validation services in a Semantic Container environment.\n \n Further information:\n - about Semantic Containers: https://www.ownyourdata.eu/semcon\n - view other [OwnYourData Service API's](https://api-docs.ownyourdata.eu)",
+    "version": "v1",
+    "title": "Semantic Validation API",
+    "contact": {
+      "email": "semcon@ownyourdata.eu"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "semantic.ownyourdata.eu",
+  "basePath": "/api",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/validate/init": {
+      "post": {
+        "summary": "query or write to blockchain",
+        "description": "submit a hash value and check if it is already stored in the blockchain",
+        "operationId": "validate_init",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "hash",
+            "in": "query",
+            "description": "hash value to be saved/queried",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "description": "either 'default' for query and create if non-existent or 'verify' to query only",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "invalid hash"
+          }
+        }
+      }
+    },
+    "/validate/usage": {
+      "post": {
+        "summary": "query or write to blockchain",
+        "description": "submit a hash value and check if it is already stored in the blockchain",
+        "operationId": "validate_usage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "hash",
+            "in": "query",
+            "description": "hash value to be saved/queried",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "description": "either 'default' for query and create if non-existent or 'verify' to query only",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "invalid hash"
+          }
+        }
+      }
+    },
+    "/validate/data": {
+      "post": {
+        "summary": "query or write to blockchain",
+        "description": "submit a hash value and check if it is already stored in the blockchain",
+        "operationId": "validate_data",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "hash",
+            "in": "query",
+            "description": "hash value to be saved/queried",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "description": "either 'default' for query and create if non-existent or 'verify' to query only",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "invalid hash"
+          }
+        }
+      }
+    }
+  }
+}

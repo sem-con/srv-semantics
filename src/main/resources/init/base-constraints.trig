@@ -8,10 +8,18 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix w3c-format: <http://www.w3.org/ns/formats/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 #################################################################
-#    NAMED GRAPH ==> :SystemConstraints
-# 	 SHACL constraints for the overall structure of data / aggregated data (to validate container description)
+#    Version of the ontology (and the base container)
+#################################################################
+
+<http://semantics.id/ns/semcon> rdf:type owl:Ontology ;
+    owl:versionIRI <http://semantics.id/ns/semcon/0.0.1> .
+
+#################################################################
+#    DEFAULT GRAPH: SHACL constraints for the overall structure of data /
+#         aggregated data (to validate container description: “INIT.TRIG”)
 #################################################################
 scr:ContainerConfigurationConstraints 
     a               sh:NodeShape ;
@@ -94,16 +102,127 @@ scr:DataConfigurationConstraints
     sh:targetClass  :DataConfiguration .
 
 #################################################################
-#    NAMED GRAPH ==> :UserFunctions - Hydra function definitions (Future)
+#    NAMED GRAPH ==> :BaseConfiguration
+#         To describe the basic configuration of the Semantic Container
+#         Including the locations of the services
 #################################################################
 :BaseConfiguration {
     :BaseConfigurationInstance rdf:type :BaseConfiguration ;
-        # usage policy matching service
-        :usagePolicyValidationService "https://semantics.ownyourdata.eu/api/validate/usage-policy" ;
-        # init validation service
-        :initValidationService "https://semantics.ownyourdata.eu/api/validate/init" ;
+        # usage policy service
+        :usagePolicyValidationService "http://localhost:2806/api/validate/usage-policy" ;
+        # usage policy service
+        :initValidationService "http://localhost:2806/api/validate/init" ;
     .
 }
 
+#################################################################
+#    NAMED GRAPH ==> :BaseModel
+#         Contains all classes and properties used within Semantic Container Context
+#################################################################
+:BaseModel {
+    #################################################################
+    #    Object Properties
+    #################################################################
+    ###  http://purl.org/dc/elements/1.1/contributor
+    dc:contributor rdf:type owl:ObjectProperty ;
+                   rdfs:range foaf:Agent .
+    ###  http://purl.org/dc/elements/1.1/creator
+    dc:creator rdf:type owl:ObjectProperty ;
+               rdfs:range foaf:Agent .
+    ###  http://semantics.id/ns/semcon#hasDataConfiguration
+    :hasDataConfiguration rdf:type owl:ObjectProperty ;
+                          rdfs:domain :ContainerConfiguration ;
+                          rdfs:range :DataConfiguration .
+    ###  http://semantics.id/ns/semcon#hasDataLayer
+    :hasDataLayer rdf:type owl:ObjectProperty ;
+                  rdfs:domain :ContainerConfiguration ;
+                  rdfs:range :DataLayer .
+    ###  http://semantics.id/ns/semcon#hasNativeSyntax
+    :hasNativeSyntax rdf:type owl:ObjectProperty ;
+                     rdfs:domain :DataConfiguration ;
+                     rdfs:range :NativeSyntax .
+
+    #################################################################
+    #    Data properties
+    #################################################################
+
+    ###  http://purl.org/dc/elements/1.1/description
+    dc:description rdf:type owl:DatatypeProperty .
+    ###  http://purl.org/dc/elements/1.1/title
+    dc:title rdf:type owl:DatatypeProperty .
+    ###  http://semantics.id/ns/semcon#hasExampleData
+    :hasExampleData rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :DataConfiguration .
+    ###  http://semantics.id/ns/semcon#isDataConstraintExist
+    :isDataConstraintExist rdf:type owl:DatatypeProperty ;
+                            rdfs:domain :DataConfiguration .
+    ###  http://semantics.id/ns/semcon#isDataMappingExist
+    :isDataMappingExist rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :DataConfiguration .
+    ###  http://semantics.id/ns/semcon#isDataModelExist
+    :isDataModelExist rdf:type owl:DatatypeProperty ;
+                       rdfs:domain :DataConfiguration .
+    ###  http://semantics.id/ns/semcon#hasTag
+    :hasTag rdf:type owl:DatatypeProperty ;
+         rdfs:domain :DataConfiguration .
+    ###  http://xmlns.com/foaf/0.1/mbox
+    foaf:mbox rdf:type owl:DatatypeProperty ;
+              rdfs:domain foaf:Agent .
+    ###  http://xmlns.com/foaf/0.1/name
+    foaf:name rdf:type owl:DatatypeProperty ;
+              rdfs:domain foaf:Agent .
+
+    #################################################################
+    #    Classes
+    #################################################################
+    ###  http://semantics.id/ns/semcon#ContainerConfiguration
+    :ContainerConfiguration rdf:type owl:Class .
+    ###  http://semantics.id/ns/semcon#DataConfiguration
+    :DataConfiguration rdf:type owl:Class .
+    ###  http://semantics.id/ns/semcon#DataLayer
+    :DataLayer rdf:type owl:Class .
+    ###  http://semantics.id/ns/semcon#NativeSyntax
+    :NativeSyntax rdf:type owl:Class .
+    ###  http://semantics.id/ns/semcon#RDFSyntax
+    :RDFSyntax rdf:type owl:Class ;
+               rdfs:subClassOf :NativeSyntax .
+    ###  http://xmlns.com/foaf/0.1/Agent
+    foaf:Agent rdf:type owl:Class .
+    ###  http://xmlns.com/foaf/0.1/Organization
+    foaf:Organization rdf:type owl:Class ;
+                      rdfs:subClassOf foaf:Agent .
+    ###  http://xmlns.com/foaf/0.1/Person
+    foaf:Person rdf:type owl:Class ;
+                rdfs:subClassOf foaf:Agent .
+
+    #################################################################
+    #    Individuals
+    #################################################################
+    ###  http://semantics.id/ns/semcon#JSON
+    :JSON rdf:type owl:NamedIndividual ,
+                   :NativeSyntax .
+    ###  http://semantics.id/ns/semcon#LayerMetadata
+    :LayerMetadata rdf:type owl:NamedIndividual ,
+                            :DataLayer ;
+                   rdfs:label "Layer: Metadata" .
+    ###  http://semantics.id/ns/semcon#LayerSemantics
+    :LayerSemantics rdf:type owl:NamedIndividual ,
+                             :DataLayer ;
+                    rdfs:label "Layer: Semantics" .
+    ###  http://semantics.id/ns/semcon#LayerSyntax
+    :LayerSyntax rdf:type owl:NamedIndividual ,
+                          :DataLayer ;
+                 rdfs:label "Layer: Syntax" .
+    ###  http://www.w3.org/ns/formats/JSON-LD
+    w3c-format:JSON-LD rdf:type owl:NamedIndividual ,
+                                :RDFSyntax .
+    ###  http://www.w3.org/ns/formats/TriG
+    w3c-format:TriG rdf:type owl:NamedIndividual ,
+                             :RDFSyntax .
+    ###  http://www.w3.org/ns/formats/Turtle
+    w3c-format:Turtle rdf:type owl:NamedIndividual ,
+                               :RDFSyntax .
+    ###  Generated by the OWL API (version 4.5.6.2018-09-06T00:27:41Z) https://github.com/owlcs/owlapi
+}
 
 

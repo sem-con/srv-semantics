@@ -1,0 +1,96 @@
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix zamg: <http://semantics.id/ns/zamg#> .
+@prefix scr: <http://semantics.id/ns/sc-resource/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+scr:DataPointShape a sh:NodeShape ;
+	sh:name "ZAMG data constraints" ;
+	sh:targetClass zamg:DataPoint ;
+	sh:description "Example data constraints for zamg:DataPoint" ;
+	sh:closed true ;
+	sh:property [
+		sh:path rdf:type ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path zamg:lastUpdate ;
+		sh:dataType xsd:dateTimeStamp ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path zamg:time ;
+		sh:dataType xsd:dateTimeStamp ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path zamg:magnitude ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path zamg:magnitudeType ;
+		sh:dataType xsd:string ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path zamg:sourceId ;
+		sh:dataType xsd:string ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path zamg:eventType ;
+		sh:dataType xsd:string ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path zamg:auth ;
+		sh:dataType xsd:string ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path wgs:location ;
+		sh:dataType wgs:Point ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+.
+scr:WGSPointShape a sh:NodeShape ;
+	sh:name "WGS Point data constraints" ;
+	sh:targetClass wgs:Point ;
+	sh:description "Data constraints for wgs:Point" ;
+	sh:closed true ;
+	sh:property [
+		sh:path rdf:type ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path wgs:long ;
+		sh:dataType xsd:decimal ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path wgs:lat ;
+		sh:dataType xsd:decimal ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+	sh:property [
+		sh:path wgs:alt ;
+		sh:dataType xsd:decimal ;
+		sh:maxCount 1 ;
+		sh:minCount 1 ;
+	] ;
+.

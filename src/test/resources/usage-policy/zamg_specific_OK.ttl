@@ -1,0 +1,77 @@
+@prefix sc: <http://semantics.id/ns/semcon#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix spl: <https://www.specialprivacy.eu/langs/usage-policy#> .
+@prefix svd: <http://www.specialprivacy.eu/vocabs/data#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+sc:DataSubjectPolicy rdf:type owl:Class ;
+    owl:equivalentClass [ 
+        owl:intersectionOf ( 
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasData ;
+                owl:someValuesFrom spl:AnyData
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasProcessing ;
+                owl:someValuesFrom spl:AnyProcessing
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasPurpose ;
+                owl:someValuesFrom spl:AnyPurpose
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasRecipient ;
+                owl:someValuesFrom spl:AnyRecipient
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasStorage ;
+                owl:someValuesFrom spl:AnyStorage
+            ]
+        ) ;
+        rdf:type owl:Class
+    ] .
+
+sc:DataControllerPolicy rdf:type owl:Class ;
+    owl:equivalentClass [ 
+        owl:intersectionOf ( 
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasData ;
+                owl:someValuesFrom [
+                    owl:unionOf (
+                        svd:OnlineActivity
+                        svd:TelecomActivity
+                    ) ;
+                ]
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasProcessing ;
+                owl:someValuesFrom spl:AnyProcessing
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasPurpose ;
+                owl:someValuesFrom spl:AnyPurpose
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasRecipient ;
+                owl:someValuesFrom spl:AnyRecipient
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasStorage ;
+                owl:someValuesFrom spl:AnyStorage
+            ]
+        ) ;
+        rdf:type owl:Class
+    ] .

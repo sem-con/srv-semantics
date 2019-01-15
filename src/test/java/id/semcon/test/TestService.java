@@ -121,6 +121,53 @@ public class TestService {
         assertEquals(200, res.status);
     }
 
+    @Test public void testZamgInitValidation() throws IOException {
+        String testUrl = "/api/validate/init";
+
+        InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("init/zamg-init.trig");
+        String initString = IOUtils.toString(initIS, "UTF-8");
+        initIS.close();
+        InputStream constraintsIS = TestService.class.getClassLoader().getResourceAsStream("init/base-constraints.trig");
+        String baseConstraints = IOUtils.toString(constraintsIS, "UTF-8");
+        constraintsIS.close();
+
+        JSONObject object = new JSONObject();
+        object.put(Service.INIT_CONFIG, initString);
+        object.put(Service.BASE_CONSTRAINTS, baseConstraints);
+
+        TestResponse res = request("POST", testUrl, object.toString());
+        //        System.out.println(res.body);
+        assertEquals(200, res.status);
+    }
+
+    @Test public void testZamgValidDataValidation() throws IOException {
+        String testUrl = "/api/validate/data";
+
+        InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("data/zamg-data.json");
+        String initString = IOUtils.toString(initIS, "UTF-8");
+        initIS.close();
+
+        JSONObject object = new JSONObject(initString);
+
+        TestResponse res = request("POST", testUrl, object.toString());
+        //        System.out.println(res.body);
+        assertEquals(200, res.status);
+    }
+
+    @Test public void testZamgInvalidDataValidation() throws IOException {
+        String testUrl = "/api/validate/data";
+
+        InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("data/zamg-data-invalid.json");
+        String initString = IOUtils.toString(initIS, "UTF-8");
+        initIS.close();
+
+        JSONObject object = new JSONObject(initString);
+
+        TestResponse res = request("POST", testUrl, object.toString());
+        //        System.out.println(res.body);
+        assertEquals(500, res.status);
+    }
+
     private TestResponse initTestResponse(String jsonKey, String usagePolicyString, String testUrl) {
 
         JSONObject object = new JSONObject();

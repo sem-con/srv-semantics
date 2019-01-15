@@ -32,6 +32,13 @@ public class SwissKnife {
         return dataModel;
     }
 
+    public static Model initAndLoadModelFromStringInput(String inputString, Lang lang) throws IOException {
+        InputStream dataModelIS = IOUtils.toInputStream(inputString, "UTF-8");
+        Model dataModel = ModelFactory.createDefaultModel();
+        RDFDataMgr.read(dataModel, dataModelIS, lang);
+        return dataModel;
+    }
+
     public static Model initAndLoadModelFromResource(String dataModelFile, Lang lang) {
         InputStream dataModelIS = SwissKnife.class.getClassLoader().getResourceAsStream(dataModelFile);
         Model dataModel = ModelFactory.createDefaultModel();

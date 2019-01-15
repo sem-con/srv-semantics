@@ -1,0 +1,20 @@
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix zamg: <http://semantics.id/ns/zamg#> .
+@prefix scr: <http://semantics.id/ns/sc-resource/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+scr:data1 a zamg:DataPoint ;
+    zamg:lastUpdate "2019-01-08T13:11:47.823Z"^^xsd:dateTimeStamp ;
+    zamg:time "2019-01-08T12:39:31.040Z"^^xsd:dateTimeStamp ;
+    zamg:magnitude 5.5 ;
+    zamg:magnitudeType "M" ;
+    zamg:sourceId "1816909" ;
+    zamg:eventType "EARTHQUAKE" ;
+#    zamg:auth "QED" ;
+    wgs:location [
+        a wgs:Point ;
+        wgs:long 131.0371 ;
+        wgs:lat 30.5926 ;
+#        wgs:alt -35 ;
+    ] ;
+.

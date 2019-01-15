@@ -1,0 +1,291 @@
+# generic
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix w3c-format: <http://www.w3.org/ns/formats/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+# privacy
+@prefix svpr:  <http://www.specialprivacy.eu/vocabs/processing#> .
+@prefix svpu:  <http://www.specialprivacy.eu/vocabs/purposes#> .
+@prefix svd:   <http://www.specialprivacy.eu/vocabs/data#> .
+@prefix svdu:  <http://www.specialprivacy.eu/vocabs/duration#> .
+@prefix svl:   <https://www.specialprivacy.eu/vocabs/locations#> .
+@prefix svr:   <https://www.specialprivacy.eu/vocabs/recipients#> .
+@prefix spl:   <https://www.specialprivacy.eu/langs/usage-policy#> .
+# shacl
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+# semcon-specific
+@prefix : <http://semantics.id/ns/semcon#> .
+@prefix scr: <http://semantics.id/ns/sc-resource/> .
+# zamg-specific
+@prefix zamg: <http://semantics.id/ns/zamg#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+#################################################################
+#    NAMED GRAPH ==> :InitialConfiguration
+#################################################################
+:InitialConfiguration {
+
+	:ContainerConfigurationInstance rdf:type :ContainerConfiguration ;
+		# generic - dublin core
+		dc:title "ZAMG Container" ;
+		dc:description """
+				This container contains information about step count
+			""" ;
+		dc:creator [
+			rdf:type foaf:Person ;
+			foaf:name "Christoph Fabianek" ;
+			foaf:mbox <mailto:christoph.fabianek@gmail.com> ;
+		] ;
+		:hasDataConfiguration :DataConfigurationInstance .
+		# :hasDataLayer scr:LayerSemantic ;		# NON-EDITABLE - assigned
+
+	:DataConfigurationInstance rdf:type :DataConfiguration ;	
+		# :isDataModelExist true ;				# NON-EDITABLE - assigned
+		# :isDataConstraintExist true ;			# NON-EDITABLE - assigned
+		# :isDataMappingExist false ;			# NON-EDITABLE - assigned
+		# :isUsagePolicyExist true ;			# NON-EDITABLE - assigned
+		# data - classifications
+		:hasTag "ZAMG", "Earthquake" ;
+		# data format - inspired from void
+		:hasNativeSyntax w3c-format:Turtle ;
+		# example data in plain string
+		:hasExampleData """
+		    @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+            @prefix zamg: <http://semantics.id/ns/zamg#> .
+            @prefix scr: <http://semantics.id/ns/sc-resource/> .
+            @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+            scr:data1 a zamg:DataPoint ;
+            zamg:lastUpdate "2019-01-08T13:11:47.823Z"^^xsd:dateTimeStamp ;
+            zamg:time "2019-01-08T12:39:31.040Z"^^xsd:dateTimeStamp ;
+            zamg:magnitude 5.5 ;
+            zamg:magnitudeType "M" ;
+            zamg:sourceId "1816909" ;
+            zamg:eventType "EARTHQUAKE" ;
+            zamg:auth "QED" ;
+            wgs:location [
+                a wgs:Point ;
+                wgs:long 131.0371 ;
+                wgs:lat 30.5926 ;
+                wgs:alt -35 ;
+            ] ;
+            .
+		"""	.
+}
+
+#################################################################
+#    NAMED GRAPH ==> :UsagePolicy
+#################################################################
+:UsagePolicy {
+	:ContainerPolicy rdf:type owl:Class ; # this line should not be changed!
+		owl:equivalentClass [ 
+			owl:intersectionOf ( 
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasData ;
+					owl:someValuesFrom svd:AnyData
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasProcessing ;
+					owl:someValuesFrom spl:AnyProcessing
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasPurpose ;
+					owl:someValuesFrom spl:AnyPurpose
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasRecipient ;
+					owl:someValuesFrom spl:AnyRecipient
+				]
+				[ 
+					rdf:type owl:Restriction ;
+					owl:onProperty spl:hasStorage ;
+					owl:someValuesFrom spl:AnyStorage
+				]
+			) ;
+			rdf:type owl:Class
+		] .
+}
+	
+#################################################################
+#    NAMED GRAPH ==> :DataModel
+#################################################################
+:DataModel {
+	# I have a single class, called DataPoint
+	zamg:DataPoint a owl:Class ;
+        rdfs:comment """
+            ZAMG data is currently represented in a single class called zamg:DataPoint
+        """ .
+
+	zamg:lastUpdate a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range xsd:dateTimeStamp ;
+		rdfs:comment """
+	        each DataPoint has a maximum of one zamg:lastUpdate property of type xsd:dateTimeStamp
+		    representing when was the DataPoint (last) published
+		""" .
+
+	zamg:time a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range xsd:integer ;
+        rdfs:comment """
+            each DataPoint has a maximum of one zamg:time property of type xsd:dateTimeStamp
+            representing when was the event happened
+        """ .
+
+	zamg:magnitude a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range xsd:decimal ;
+        rdfs:comment """
+            each DataPoint has a maximum of one zamg:magnitude property of type xsd:decimal
+            representing the magnitude of the event happened
+        """ .
+
+	zamg:magnitudeType a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range xsd:string ;
+        rdfs:comment """
+            each DataPoint has a maximum of one zamg:magnitudeType property of type xsd:string
+            representing the type of magnitude from the event happened
+        """ .
+
+	zamg:sourceId a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range xsd:string ;
+        rdfs:comment """
+            each DataPoint has a maximum of one zamg:dataSourceId property of type xsd:string
+            representing the unique id of the zamg:DataPoint generated by the data source.
+        """ .
+
+	zamg:eventType a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range xsd:string ;
+        rdfs:comment """
+            each DataPoint has a maximum of one zamg:eventType property of type xsd:string
+            representing the type of the event happened (e.g., EARTHQUAKE)
+        """ .
+
+	zamg:auth a owl:DatatypeProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range xsd:string ;
+        rdfs:comment """
+            each DataPoint has a maximum of one zamg:dataSourceId property of type xsd:string
+            representing the publisher of the data (e.g., expert, machine)
+        """ .
+
+	wgs:location a owl:ObjectProperty, owl:FunctionalProperty ;
+		rdfs:domain zamg:DataPoint ;
+		rdfs:range wgs:Point ;
+        rdfs:comment """
+            each DataPoint has a maximum of one wgs:location property of type wgs:Point
+            representing where was the earthquake event happened
+        """ .
+}
+
+#################################################################
+#    NAMED GRAPH ==> :DataConstraint
+#################################################################
+:DataConstraint {
+	scr:DataPointShape a sh:NodeShape ;
+		sh:name "ZAMG data constraints" ;
+		sh:targetClass: zamg:DataPoint ;
+		sh:description "Example data constraints for zamg:DataPoint" ;
+		sh:property [
+			sh:path rdf:type ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path zamg:lastUpdate ;
+			sh:dataType xsd:dateTimeStamp ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path zamg:time ;
+			sh:dataType xsd:dateTimeStamp ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path zamg:magnitude ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path zamg:magnitudeType ;
+			sh:dataType xsd:string ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path zamg:sourceId ;
+			sh:dataType xsd:string ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path zamg:eventType ;
+			sh:dataType xsd:string ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path zamg:auth ;
+			sh:dataType xsd:string ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path wgs:location ;
+			sh:dataType wgs:Point ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+	.
+	scr:WGSPointShape a sh:NodeShape ;
+		sh:name "WGS Point data constraints" ;
+		sh:targetClass: wgs:Point ;
+		sh:description "Data constraints for wgs:Point" ;
+		sh:property [
+			sh:path wgs:long ;
+			sh:dataType xsd:decimal ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path wgs:lat ;
+			sh:dataType xsd:decimal ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+		sh:property [
+			sh:path wgs:alt ;
+			sh:dataType xsd:decimal ;
+			sh:maxCount 1 ;
+			sh:minCount 1 ;
+		] ;
+	.
+}
+
+#################################################################
+#    NAMED GRAPH ==> :DataMappings (Future)
+#################################################################
+:DataMapping {
+
+}
+
+#################################################################
+#    NAMED GRAPH ==> :UserFunctions - Hydra function definitions (Future)
+#################################################################
+:UserFunction {
+
+}

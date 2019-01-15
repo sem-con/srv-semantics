@@ -1,5 +1,6 @@
 package id.semcon;
 
+import id.semcon.engine.DataValidationEngine;
 import id.semcon.engine.InitValidationEngine;
 import id.semcon.engine.UsagePolicyEngine;
 import org.json.JSONObject;
@@ -10,6 +11,8 @@ import static spark.Spark.*;
 
 public class Service {
 
+    public static final String CONTENT_DATA = "content-data";
+    public static final String CONTENT_CONSTRAINTS = "content-constraints";
     public static final String USAGE_POLICY = "usage-policy";
     public static final String INIT_CONFIG = "init-config";
     public static final String BASE_CONSTRAINTS = "base-constraints";
@@ -17,6 +20,7 @@ public class Service {
     private static final Logger log = LoggerFactory.getLogger(Service.class);
     private static final UsagePolicyEngine usagePolicyEngine = new UsagePolicyEngine();
     private static final InitValidationEngine initValidationEngine = new InitValidationEngine();
+    private static final DataValidationEngine dataValidationEngine = new DataValidationEngine();
 
     public static void main(String[] args) {
         log.info("starting semantic services");
@@ -69,6 +73,31 @@ public class Service {
                 JSONObject rootObject = new JSONObject(body);
                 String jsonBody = rootObject.getString(USAGE_POLICY);
                 validationResult = usagePolicyEngine.policyCheck(jsonBody);
+                if (validationResult.isEmpty()) {
+                    response.status(200);
+                }
+            } catch (Exception e) {
+                validationResult = e.getMessage();
+            }
+
+            return validationResult;
+        });
+
+        // usage policy checker
+        post("/api/validate/data", (request, response) -> {
+            // default response
+            response.status(500);
+            response.type("application/json");
+            String body = request.body();
+            log.info(request.headers().toString());
+            log.info(body);
+            String validationResult;
+            try {
+                // full json content
+                JSONObject rootObject = new JSONObject(body);
+                String contentData = rootObject.getString(CONTENT_DATA);
+                String contentConstraints = rootObject.getString(CONTENT_CONSTRAINTS);
+                validationResult = dataValidationEngine.dataCheck(contentData, contentConstraints);
                 if (validationResult.isEmpty()) {
                     response.status(200);
                 }
