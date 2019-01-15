@@ -20,8 +20,8 @@
   "paths": {
     "/validate/init": {
       "post": {
-        "summary": "query or write to blockchain",
-        "description": "submit a hash value and check if it is already stored in the blockchain",
+        "summary": "validate container configuration",
+        "description": "matches the provided container configuration against defined constraints",
         "operationId": "validate_init",
         "consumes": [
           "application/json"
@@ -31,31 +31,41 @@
         ],
         "parameters": [
           {
-            "name": "hash",
-            "in": "query",
-            "description": "hash value to be saved/queried",
+            "name": "input",
+            "in": "body",
+            "description": "JSON object with base constraints and configuration",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "mode",
-            "in": "query",
-            "description": "either 'default' for query and create if non-existent or 'verify' to query only",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "init-config": {
+                  "type": "string"
+                },
+                "base-constraints": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "init-config",
+                "base-constraints"
+              ]
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "success"
+          },
           "500": {
-            "description": "invalid hash"
+            "description": "invalid"
           }
         }
       }
     },
     "/validate/usage": {
       "post": {
-        "summary": "query or write to blockchain",
-        "description": "submit a hash value and check if it is already stored in the blockchain",
+        "summary": "check policy matching",
+        "description": "matches the usage policy of input data (sc:DataSubjectPolicy) against the semantic container policy (sc:DataControllerPolicy)",
         "operationId": "validate_usage",
         "consumes": [
           "application/json"
@@ -65,31 +75,37 @@
         ],
         "parameters": [
           {
-            "name": "hash",
-            "in": "query",
-            "description": "hash value to be saved/queried",
+            "name": "input",
+            "in": "body",
+            "description": "JSON object that wraps a Turtle file using JSON key 'usage-policy'",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "mode",
-            "in": "query",
-            "description": "either 'default' for query and create if non-existent or 'verify' to query only",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "usage-policy": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "usage-policy"
+              ]
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "success"
+          },
           "500": {
-            "description": "invalid hash"
+            "description": "invalid"
           }
         }
       }
     },
     "/validate/data": {
       "post": {
-        "summary": "query or write to blockchain",
-        "description": "submit a hash value and check if it is already stored in the blockchain",
+        "summary": "validate data against constraints",
+        "description": "validates if 'content-data' (turtle format) conforms to 'content-constraints' (also turtle format)",
         "operationId": "validate_data",
         "consumes": [
           "application/json"
@@ -99,23 +115,33 @@
         ],
         "parameters": [
           {
-            "name": "hash",
-            "in": "query",
-            "description": "hash value to be saved/queried",
+            "name": "input",
+            "in": "body",
+            "description": "JSON object with data and constraints",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "mode",
-            "in": "query",
-            "description": "either 'default' for query and create if non-existent or 'verify' to query only",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content-data": {
+                  "type": "string"
+                },
+                "content-constraints": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "content-data",
+                "content-constraints"
+              ]
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "success"
+          },
           "500": {
-            "description": "invalid hash"
+            "description": "invalid"
           }
         }
       }
