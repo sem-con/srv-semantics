@@ -1,7 +1,7 @@
 # Validation Service
 version 1.1.1 (9.1.2019)
 
-Build instrutions:  
+Build instructions:  
 * `mvn clean install`
 * `java -jar target/validation-service-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
