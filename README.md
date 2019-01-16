@@ -1,10 +1,15 @@
 # Validation Service
-version 1.1.0 (17.12.2018)
+version 1.1.1 (9.1.2019)
+
+Build instrutions:  
 * `mvn clean install`
 * `java -jar target/validation-service-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
+Swagger documentation: https://api-docs.ownyourdata.eu/semcon-validation/  
+
+
 ## About Semantic Containers
-Semantic Containers enable secure and traceable data exchange between 2 parties.  
+Semantic Containers enable secure and traceable data exchange between multiple parties.  
 more infos and documentation: https://ownyourdata.eu/en/semcon
 
 ## Init File Validation Service  
