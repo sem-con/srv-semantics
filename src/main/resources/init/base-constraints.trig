@@ -198,8 +198,12 @@ scr:DataConfigurationConstraints
     #################################################################
     #    Individuals
     #################################################################
+    ###  https://ownyourdata.eu/semcon/ontology
     ###  http://semantics.id/ns/semcon#JSON
     :JSON rdf:type owl:NamedIndividual ,
+                   :NativeSyntax .
+    ###  http://semantics.id/ns/semcon#CSV
+    :CSV rdf:type owl:NamedIndividual ,
                    :NativeSyntax .
     ###  http://semantics.id/ns/semcon#LayerMetadata
     :LayerMetadata rdf:type owl:NamedIndividual ,
