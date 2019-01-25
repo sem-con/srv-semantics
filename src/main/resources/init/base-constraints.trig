@@ -109,9 +109,9 @@ scr:DataConfigurationConstraints
 :BaseConfiguration {
     :BaseConfigurationInstance rdf:type :BaseConfiguration ;
         # usage policy service
-        :usagePolicyValidationService "http://localhost:2806/api/validate/usage-policy" ;
+        :usagePolicyValidationService "https://semantic.ownyourdata.eu/api/validate/usage-policy" ;
         # usage policy service
-        :initValidationService "http://localhost:2806/api/validate/init" ;
+        :initValidationService "https://semantic.ownyourdata.eu/api/validate/init" ;
     .
 }
 
