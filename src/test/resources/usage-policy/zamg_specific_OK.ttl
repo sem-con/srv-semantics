@@ -1,4 +1,4 @@
-@prefix sc: <http://semantics.id/ns/semcon#> .
+@prefix sc: <http://w3id.org/semcon/ns/ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix spl: <https://www.specialprivacy.eu/langs/usage-policy#> .

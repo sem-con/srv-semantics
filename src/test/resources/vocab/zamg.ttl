@@ -1,15 +1,15 @@
-@prefix : <http://semantics.id/ns/zamg/> .
+@prefix : <http://w3id.org/semcon/ns/zamg/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix zamg: <http://semantics.id/ns/zamg#> .
-@base <http://semantics.id/ns/zamg> .
+@prefix zamg: <http://w3id.org/semcon/ns/zamg#> .
+@base <http://w3id.org/semcon/ns/zamg> .
 
-<http://semantics.id/ns/zamg> rdf:type owl:Ontology ;
-                               owl:versionIRI <http://semantics.id/ns/zamg/1.0.0> .
+<http://w3id.org/semcon/ns/zamg> rdf:type owl:Ontology ;
+                               owl:versionIRI <http://w3id.org/semcon/ns/zamg/1.0.0> .
 
 #################################################################
 #    Object Properties
@@ -30,7 +30,7 @@ wgs:location rdf:type owl:ObjectProperty ,
 #    Data properties
 #################################################################
 
-###  http://semantics.id/ns/zamg#auth
+###  http://w3id.org/semcon/ns/zamg#auth
 zamg:auth rdf:type owl:DatatypeProperty ,
                    owl:FunctionalProperty ;
           rdfs:domain zamg:DataPoint ;
@@ -41,7 +41,7 @@ zamg:auth rdf:type owl:DatatypeProperty ,
         """ .
 
 
-###  http://semantics.id/ns/zamg#eventType
+###  http://w3id.org/semcon/ns/zamg#eventType
 zamg:eventType rdf:type owl:DatatypeProperty ,
                         owl:FunctionalProperty ;
                rdfs:domain zamg:DataPoint ;
@@ -52,7 +52,7 @@ zamg:eventType rdf:type owl:DatatypeProperty ,
         """ .
 
 
-###  http://semantics.id/ns/zamg#lastUpdate
+###  http://w3id.org/semcon/ns/zamg#lastUpdate
 zamg:lastUpdate rdf:type owl:DatatypeProperty ,
                          owl:FunctionalProperty ;
                 rdfs:domain zamg:DataPoint ;
@@ -63,7 +63,7 @@ zamg:lastUpdate rdf:type owl:DatatypeProperty ,
 		""" .
 
 
-###  http://semantics.id/ns/zamg#magnitude
+###  http://w3id.org/semcon/ns/zamg#magnitude
 zamg:magnitude rdf:type owl:DatatypeProperty ,
                         owl:FunctionalProperty ;
                rdfs:domain zamg:DataPoint ;
@@ -74,7 +74,7 @@ zamg:magnitude rdf:type owl:DatatypeProperty ,
         """ .
 
 
-###  http://semantics.id/ns/zamg#magnitudeType
+###  http://w3id.org/semcon/ns/zamg#magnitudeType
 zamg:magnitudeType rdf:type owl:DatatypeProperty ,
                             owl:FunctionalProperty ;
                    rdfs:domain zamg:DataPoint ;
@@ -85,7 +85,7 @@ zamg:magnitudeType rdf:type owl:DatatypeProperty ,
         """ .
 
 
-###  http://semantics.id/ns/zamg#sourceId
+###  http://w3id.org/semcon/ns/zamg#sourceId
 zamg:sourceId rdf:type owl:DatatypeProperty ,
                        owl:FunctionalProperty ;
               rdfs:domain zamg:DataPoint ;
@@ -96,7 +96,7 @@ zamg:sourceId rdf:type owl:DatatypeProperty ,
         """ .
 
 
-###  http://semantics.id/ns/zamg#time
+###  http://w3id.org/semcon/ns/zamg#time
 zamg:time rdf:type owl:DatatypeProperty ,
                    owl:FunctionalProperty ;
           rdfs:domain zamg:DataPoint ;
@@ -111,7 +111,7 @@ zamg:time rdf:type owl:DatatypeProperty ,
 #    Classes
 #################################################################
 
-###  http://semantics.id/ns/zamg#DataPoint
+###  http://w3id.org/semcon/ns/zamg#DataPoint
 zamg:DataPoint rdf:type owl:Class ;
                rdfs:comment """
             ZAMG data is currently represented in a single class called zamg:DataPoint

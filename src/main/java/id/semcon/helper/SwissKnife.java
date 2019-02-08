@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
 
 public class SwissKnife {
 
-    public static final String semconNS = "http://semantics.id/ns/semcon#";
+    public static final String semconNS = "http://w3id.org/semcon/ns/ontology#";
     public static final Model specialModel =
             SwissKnife.initAndLoadModelFromResource("usage-policy/special-integrated.ttl", Lang.TURTLE);
 

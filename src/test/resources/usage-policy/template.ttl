@@ -1,4 +1,4 @@
-@prefix sc: <http://semantics.id/ns/semcon#> .
+@prefix sc: <http://w3id.org/semcon/ns/ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix spl: <https://www.specialprivacy.eu/langs/usage-policy#> .
@@ -7,7 +7,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-###  http://semantics.id/ns/example/DataSubjectPolicy
+###  http://w3id.org/semcon/example/DataSubjectPolicy
 sc:DataSubjectPolicy rdf:type owl:Class ;
     owl:equivalentClass [
         owl:intersectionOf (
@@ -41,7 +41,7 @@ sc:DataSubjectPolicy rdf:type owl:Class ;
     ] .
 
 
-###  http://semantics.id/ns/example/DataControllerPolicy
+###  http://w3id.org/semcon/example/DataControllerPolicy
 sc:DataControllerPolicy rdf:type owl:Class ;
     owl:equivalentClass [
         owl:intersectionOf (

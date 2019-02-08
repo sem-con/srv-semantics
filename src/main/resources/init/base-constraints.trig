@@ -1,5 +1,5 @@
-@prefix : <http://semantics.id/ns/semcon#> .
-@prefix scr: <http://semantics.id/ns/sc-resource/> .
+@prefix : <http://w3id.org/semcon/ns/ontology#> .
+@prefix scr: <http://w3id.org/semcon/resource/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -14,8 +14,8 @@
 #    Version of the ontology (and the base container)
 #################################################################
 
-<http://semantics.id/ns/semcon> rdf:type owl:Ontology ;
-    owl:versionIRI <http://semantics.id/ns/semcon/0.0.1> .
+<http://w3id.org/semcon/ns/ontology> rdf:type owl:Ontology ;
+    owl:versionIRI <http://w3id.org/semcon/ns/ontology/0.0.1> .
 
 #################################################################
 #    DEFAULT GRAPH: SHACL constraints for the overall structure of data /
@@ -129,15 +129,15 @@ scr:DataConfigurationConstraints
     ###  http://purl.org/dc/elements/1.1/creator
     dc:creator rdf:type owl:ObjectProperty ;
                rdfs:range foaf:Agent .
-    ###  http://semantics.id/ns/semcon#hasDataConfiguration
+    ###  http://w3id.org/semcon/ns/ontology#hasDataConfiguration
     :hasDataConfiguration rdf:type owl:ObjectProperty ;
                           rdfs:domain :ContainerConfiguration ;
                           rdfs:range :DataConfiguration .
-    ###  http://semantics.id/ns/semcon#hasDataLayer
+    ###  http://w3id.org/semcon/ns/ontology#hasDataLayer
     :hasDataLayer rdf:type owl:ObjectProperty ;
                   rdfs:domain :ContainerConfiguration ;
                   rdfs:range :DataLayer .
-    ###  http://semantics.id/ns/semcon#hasNativeSyntax
+    ###  http://w3id.org/semcon/ns/ontology#hasNativeSyntax
     :hasNativeSyntax rdf:type owl:ObjectProperty ;
                      rdfs:domain :DataConfiguration ;
                      rdfs:range :NativeSyntax .
@@ -150,19 +150,19 @@ scr:DataConfigurationConstraints
     dc:description rdf:type owl:DatatypeProperty .
     ###  http://purl.org/dc/elements/1.1/title
     dc:title rdf:type owl:DatatypeProperty .
-    ###  http://semantics.id/ns/semcon#hasExampleData
+    ###  http://w3id.org/semcon/ns/ontology#hasExampleData
     :hasExampleData rdf:type owl:DatatypeProperty ;
                  rdfs:domain :DataConfiguration .
-    ###  http://semantics.id/ns/semcon#isDataConstraintExist
+    ###  http://w3id.org/semcon/ns/ontology#isDataConstraintExist
     :isDataConstraintExist rdf:type owl:DatatypeProperty ;
                             rdfs:domain :DataConfiguration .
-    ###  http://semantics.id/ns/semcon#isDataMappingExist
+    ###  http://w3id.org/semcon/ns/ontology#isDataMappingExist
     :isDataMappingExist rdf:type owl:DatatypeProperty ;
                          rdfs:domain :DataConfiguration .
-    ###  http://semantics.id/ns/semcon#isDataModelExist
+    ###  http://w3id.org/semcon/ns/ontology#isDataModelExist
     :isDataModelExist rdf:type owl:DatatypeProperty ;
                        rdfs:domain :DataConfiguration .
-    ###  http://semantics.id/ns/semcon#hasTag
+    ###  http://w3id.org/semcon/ns/ontology#hasTag
     :hasTag rdf:type owl:DatatypeProperty ;
          rdfs:domain :DataConfiguration .
     ###  http://xmlns.com/foaf/0.1/mbox
@@ -175,15 +175,15 @@ scr:DataConfigurationConstraints
     #################################################################
     #    Classes
     #################################################################
-    ###  http://semantics.id/ns/semcon#ContainerConfiguration
+    ###  http://w3id.org/semcon/ns/ontology#ContainerConfiguration
     :ContainerConfiguration rdf:type owl:Class .
-    ###  http://semantics.id/ns/semcon#DataConfiguration
+    ###  http://w3id.org/semcon/ns/ontology#DataConfiguration
     :DataConfiguration rdf:type owl:Class .
-    ###  http://semantics.id/ns/semcon#DataLayer
+    ###  http://w3id.org/semcon/ns/ontology#DataLayer
     :DataLayer rdf:type owl:Class .
-    ###  http://semantics.id/ns/semcon#NativeSyntax
+    ###  http://w3id.org/semcon/ns/ontology#NativeSyntax
     :NativeSyntax rdf:type owl:Class .
-    ###  http://semantics.id/ns/semcon#RDFSyntax
+    ###  http://w3id.org/semcon/ns/ontology#RDFSyntax
     :RDFSyntax rdf:type owl:Class ;
                rdfs:subClassOf :NativeSyntax .
     ###  http://xmlns.com/foaf/0.1/Agent
@@ -199,21 +199,21 @@ scr:DataConfigurationConstraints
     #    Individuals
     #################################################################
     ###  https://ownyourdata.eu/semcon/ontology
-    ###  http://semantics.id/ns/semcon#JSON
+    ###  http://w3id.org/semcon/ns/ontology#JSON
     :JSON rdf:type owl:NamedIndividual ,
                    :NativeSyntax .
-    ###  http://semantics.id/ns/semcon#CSV
+    ###  http://w3id.org/semcon/ns/ontology#CSV
     :CSV rdf:type owl:NamedIndividual ,
                    :NativeSyntax .
-    ###  http://semantics.id/ns/semcon#LayerMetadata
+    ###  http://w3id.org/semcon/ns/ontology#LayerMetadata
     :LayerMetadata rdf:type owl:NamedIndividual ,
                             :DataLayer ;
                    rdfs:label "Layer: Metadata" .
-    ###  http://semantics.id/ns/semcon#LayerSemantics
+    ###  http://w3id.org/semcon/ns/ontology#LayerSemantics
     :LayerSemantics rdf:type owl:NamedIndividual ,
                              :DataLayer ;
                     rdfs:label "Layer: Semantics" .
-    ###  http://semantics.id/ns/semcon#LayerSyntax
+    ###  http://w3id.org/semcon/ns/ontology#LayerSyntax
     :LayerSyntax rdf:type owl:NamedIndividual ,
                           :DataLayer ;
                  rdfs:label "Layer: Syntax" .

@@ -19,10 +19,10 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 # semcon-specific
-@prefix : <http://semantics.id/ns/semcon#> .
-@prefix scr: <http://semantics.id/ns/sc-resource/> .
+@prefix : <http://w3id.org/semcon/ns/ontology#> .
+@prefix scr: <http://w3id.org/semcon/resource/> .
 # zamg-specific
-@prefix zamg: <http://semantics.id/ns/zamg#> .
+@prefix zamg: <http://w3id.org/semcon/ns/zamg#> .
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 
 #################################################################
@@ -56,8 +56,8 @@
 		# example data in plain string
 		:hasExampleData """
 		    @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
-            @prefix zamg: <http://semantics.id/ns/zamg#> .
-            @prefix scr: <http://semantics.id/ns/sc-resource/> .
+            @prefix zamg: <http://w3id.org/semcon/ns/zamg#> .
+            @prefix scr: <http://w3id.org/semcon/resource/> .
             @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
             scr:data1 a zamg:DataPoint ;
