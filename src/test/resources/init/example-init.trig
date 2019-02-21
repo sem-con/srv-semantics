@@ -21,7 +21,7 @@
 #################################################################
 #    NAMED GRAPH ==> :UserConfigurations
 #################################################################
-:InitialConfiguration {
+:BaseConfiguration {
 
 	:ContainerConfigurationInstance rdf:type :ContainerConfiguration ;
 		# generic - dublin core

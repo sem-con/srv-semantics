@@ -23,11 +23,11 @@ Example usage: `curl -s -o /dev/null -w "%{http_code}" -H "Content-Type: applica
 
 ### Input file format
 
-The input file is of type `application/json` to wrap a TRIG file using JSON key "init-config".  
+The input file is of type `application/json` to wrap a TRIG file using JSON key "base-config".  
 The TRIG file should:
 * follow the template provided in the `test/resources/init/example-init.trig`, 
 and the subsequent `test/resources/init/example-init.trig.json` file that wrap up the TRIG file as JSON. 
-* and will be tested against the base constraints `main/resources/init/base-constraints.ttl`. 
+* and will be tested against the base constraints `main/resources/init/image-constraints.ttl`. 
 
 The output is `200` if the init file conform to the template, or `500` otherwise.
 

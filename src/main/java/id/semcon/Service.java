@@ -1,7 +1,7 @@
 package id.semcon;
 
 import id.semcon.engine.DataValidationEngine;
-import id.semcon.engine.InitValidationEngine;
+import id.semcon.engine.BaseValidationEngine;
 import id.semcon.engine.UsagePolicyEngine;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -14,12 +14,12 @@ public class Service {
     public static final String CONTENT_DATA = "content-data";
     public static final String CONTENT_CONSTRAINTS = "content-constraints";
     public static final String USAGE_POLICY = "usage-policy";
-    public static final String INIT_CONFIG = "init-config";
-    public static final String BASE_CONSTRAINTS = "base-constraints";
+    public static final String BASE_CONFIG = "base-config";
+    public static final String IMAGE_CONSTRAINTS = "image-constraints";
 
     private static final Logger log = LoggerFactory.getLogger(Service.class);
     private static final UsagePolicyEngine usagePolicyEngine = new UsagePolicyEngine();
-    private static final InitValidationEngine initValidationEngine = new InitValidationEngine();
+    private static final BaseValidationEngine baseValidationEngine = new BaseValidationEngine();
     private static final DataValidationEngine dataValidationEngine = new DataValidationEngine();
 
     public static void main(String[] args) {
@@ -47,9 +47,9 @@ public class Service {
             try {
                 // full json content
                 JSONObject rootObject = new JSONObject(body);
-                String initConfigString = rootObject.getString(INIT_CONFIG);
-                String baseConstraints = rootObject.getString(BASE_CONSTRAINTS);
-                validationResult = initValidationEngine.initConfigValidation(initConfigString, baseConstraints);
+                String baseConfigString = rootObject.getString(BASE_CONFIG);
+                String imageConstraints = rootObject.getString(IMAGE_CONSTRAINTS);
+                validationResult = baseValidationEngine.baseConfigValidation(baseConfigString, imageConstraints);
                 if (validationResult.isEmpty()) {
                     response.status(200);
                 }

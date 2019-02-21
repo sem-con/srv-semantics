@@ -17,12 +17,12 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 
-public class InitValidationEngine {
+public class BaseValidationEngine {
 
     private final Resource permissivePolicy;
     private final Resource containerPolicy;
 
-    private final String initConfigNG;
+    private final String baseConfigNG;
     private final String usagePoliciesNG;
     private final String dataModelNG;
     private final String dataConstraintNG;
@@ -31,11 +31,11 @@ public class InitValidationEngine {
     private final Model permissivePolicyModel;
     //    private final Model baseConstraintModel;
 
-    public InitValidationEngine() {
+    public BaseValidationEngine() {
         permissivePolicy = ResourceFactory.createResource(SwissKnife.semconNS + "PermissivePolicy");
         containerPolicy = ResourceFactory.createResource(SwissKnife.semconNS + "ContainerPolicy");
 
-        initConfigNG = SwissKnife.semconNS + "InitialConfiguration";
+        baseConfigNG = SwissKnife.semconNS + "BaseConfiguration";
         usagePoliciesNG = SwissKnife.semconNS + "UsagePolicy";
         dataModelNG = SwissKnife.semconNS + "DataModel";
         dataConstraintNG = SwissKnife.semconNS + "DataConstraint";
@@ -43,48 +43,47 @@ public class InitValidationEngine {
 
         permissivePolicyModel =
                 SwissKnife.initAndLoadModelFromResource("usage-policy/permissive-policy.ttl", Lang.TURTLE);
-        //        baseConstraintModel = SwissKnife.initAndLoadModelFromResource("init/base-constraints.ttl", Lang.TURTLE);
 
     }
 
-    public String initConfigValidation(String initConfig, String baseConstraints) {
+    public String baseConfigValidation(String baseConfig, String imageConstraints) {
         String result = "";
 
-        InputStream initIS = IOUtils.toInputStream(initConfig, Charset.forName("UTF-8"));
-        Dataset initDataset = DatasetFactory.create();
+        InputStream initIS = IOUtils.toInputStream(baseConfig, Charset.forName("UTF-8"));
+        Dataset baseDataset = DatasetFactory.create();
         try {
-            RDFDataMgr.read(initDataset, initIS, Lang.TRIG);
+            RDFDataMgr.read(baseDataset, initIS, Lang.TRIG);
         } catch (Exception e) {
             result = "Error reading initFile Config. Is it valid TRIG file?";
         }
-        InputStream baseConstraintsIS = IOUtils.toInputStream(baseConstraints, Charset.forName("UTF-8"));
-        Dataset baseConstraintsDS = DatasetFactory.create();
+        InputStream imageConstraintsIS = IOUtils.toInputStream(imageConstraints, Charset.forName("UTF-8"));
+        Dataset imageConstraintsDS = DatasetFactory.create();
         try {
-            RDFDataMgr.read(baseConstraintsDS, baseConstraintsIS, Lang.TRIG);
+            RDFDataMgr.read(imageConstraintsDS, imageConstraintsIS, Lang.TRIG);
         } catch (Exception e) {
-            result = "Error reading baseConstraints. Is it valid TRIG file?";
+            result = "Error reading imageConstraints. Is it valid TRIG file?";
         }
 
         if (result.isEmpty()) {
-            if (!initDataset.containsNamedModel(initConfigNG) || initDataset.getNamedModel(initConfigNG).isEmpty()) {
-                result = "Init Config Graph is not exists or empty";
-            } else if (!initDataset.containsNamedModel(usagePoliciesNG) || initDataset.getNamedModel(usagePoliciesNG)
+            if (!baseDataset.containsNamedModel(baseConfigNG) || baseDataset.getNamedModel(baseConfigNG).isEmpty()) {
+                result = "Init Config Graph does not exist or is empty";
+            } else if (!baseDataset.containsNamedModel(usagePoliciesNG) || baseDataset.getNamedModel(usagePoliciesNG)
                     .isEmpty()) {
-                result = "Usage Policy is not exists or empty";
-            } else if (!checkValidPolicy(initDataset.getNamedModel(usagePoliciesNG))) {
+                result = "Usage Policy does not exist or is empty";
+            } else if (!checkValidPolicy(baseDataset.getNamedModel(usagePoliciesNG))) {
                 result = "Usage Policy is not valid";
             } else {
-                result = checkInitConfig(initDataset, baseConstraintsDS);
+                result = checkBaseConfig(baseDataset, imageConstraintsDS);
             }
         }
 
         return result;
     }
 
-    private String checkInitConfig(Dataset initDataset, Dataset baseConstraintsDS) {
+    private String checkBaseConfig(Dataset baseDataset, Dataset imageConstraintsDS) {
         String result = "";
         Resource validationResult = ValidationUtil
-                .validateModel(initDataset.getNamedModel(initConfigNG), baseConstraintsDS.getDefaultModel(), false);
+                .validateModel(baseDataset.getNamedModel(baseConfigNG), imageConstraintsDS.getDefaultModel(), false);
         Model resultModel = validationResult.getModel();
         if (resultModel.listStatements(null, SH.resultSeverity, SH.Violation).toList().size() >= 1) {
             StringWriter resultWriter = new StringWriter();

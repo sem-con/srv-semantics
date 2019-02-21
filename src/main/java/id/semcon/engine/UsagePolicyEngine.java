@@ -30,7 +30,7 @@ public class UsagePolicyEngine {
         if (model.isEmpty()) {
             result = "Usage policy is empty!";
         } else if (!SwissKnife.policyCheck(model, dataControllerPolicy, dataSubjectPolicy)) {
-            result = "DataControllerPolicy in not conform to the DataSubjectPolicy!";
+            result = "DataControllerPolicy does not conform to DataSubjectPolicy!";
         }
         model.close();
 

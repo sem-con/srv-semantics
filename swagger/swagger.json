@@ -38,16 +38,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "init-config": {
+                "base-config": {
                   "type": "string"
                 },
-                "base-constraints": {
+                "image-constraints": {
                   "type": "string"
                 }
               },
               "required": [
-                "init-config",
-                "base-constraints"
+                "base-config",
+                "image-constraints"
               ]
             }
           }

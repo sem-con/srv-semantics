@@ -108,13 +108,13 @@ public class TestService {
         InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("init/example-init.trig");
         String initString = IOUtils.toString(initIS, "UTF-8");
         initIS.close();
-        InputStream constraintsIS = TestService.class.getClassLoader().getResourceAsStream("init/base-constraints.trig");
-        String baseConstraints = IOUtils.toString(constraintsIS, "UTF-8");
+        InputStream constraintsIS = TestService.class.getClassLoader().getResourceAsStream("init/image-constraints.trig");
+        String imageConstraints = IOUtils.toString(constraintsIS, "UTF-8");
         constraintsIS.close();
 
         JSONObject object = new JSONObject();
-        object.put(Service.INIT_CONFIG, initString);
-        object.put(Service.BASE_CONSTRAINTS, baseConstraints);
+        object.put(Service.BASE_CONFIG, initString);
+        object.put(Service.IMAGE_CONSTRAINTS, imageConstraints);
 
         TestResponse res = request("POST", testUrl, object.toString());
         //        System.out.println(res.body);
@@ -127,13 +127,13 @@ public class TestService {
         InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("init/zamg-init.trig");
         String initString = IOUtils.toString(initIS, "UTF-8");
         initIS.close();
-        InputStream constraintsIS = TestService.class.getClassLoader().getResourceAsStream("init/base-constraints.trig");
-        String baseConstraints = IOUtils.toString(constraintsIS, "UTF-8");
+        InputStream constraintsIS = TestService.class.getClassLoader().getResourceAsStream("init/image-constraints.trig");
+        String imageConstraints = IOUtils.toString(constraintsIS, "UTF-8");
         constraintsIS.close();
 
         JSONObject object = new JSONObject();
-        object.put(Service.INIT_CONFIG, initString);
-        object.put(Service.BASE_CONSTRAINTS, baseConstraints);
+        object.put(Service.BASE_CONFIG, initString);
+        object.put(Service.IMAGE_CONSTRAINTS, imageConstraints);
 
         TestResponse res = request("POST", testUrl, object.toString());
         //        System.out.println(res.body);

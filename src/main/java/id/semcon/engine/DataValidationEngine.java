@@ -39,7 +39,7 @@ public class DataValidationEngine {
         } else {
             Resource validationResult = ValidationUtil.validateModel(dataGraph, shapesGraph, false);
             if (validationResult.getModel().contains(null, SH.conforms, dataGraph.createTypedLiteral(false))) {
-                result = "data is not conformance to the SHACL constraints!";
+                result = "data does not conform to SHACL constraints!";
             }
         }
 
