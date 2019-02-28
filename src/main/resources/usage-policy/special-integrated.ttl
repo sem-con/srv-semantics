@@ -1,18 +1,98 @@
-@prefix wgs:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
-@prefix owl:   <http://www.w3.org/2002/07/owl#> .
-@prefix gn:    <http://www.geonames.org/ontology#> .
-@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
-@prefix svpr:  <http://www.specialprivacy.eu/vocabs/processing#> .
-@prefix svpu:  <http://www.specialprivacy.eu/vocabs/purposes#> .
-@prefix svd:   <http://www.specialprivacy.eu/vocabs/data#> .
-@prefix svdu:  <http://www.specialprivacy.eu/vocabs/duration#> .
-@prefix svl:   <https://www.specialprivacy.eu/vocabs/locations#> .
-@prefix svr:   <https://www.specialprivacy.eu/vocabs/recipients#> .
-@prefix spl:   <https://www.specialprivacy.eu/langs/usage-policy#> .
+@prefix : <http://www.specialprivacy.eu/langs/usage-policy-ontology#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix scp: <http://w3id.org/semcon/ns/policy#> .
+@prefix spl: <https://www.specialprivacy.eu/langs/usage-policy#> .
+@prefix svd: <http://www.specialprivacy.eu/vocabs/data#> .
+@prefix svl: <https://www.specialprivacy.eu/vocabs/locations#> .
+@prefix svr: <https://www.specialprivacy.eu/vocabs/recipients#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix svdu: <http://www.specialprivacy.eu/vocabs/duration#> .
+@prefix svpr: <http://www.specialprivacy.eu/vocabs/processing#> .
+@prefix svpu: <http://www.specialprivacy.eu/vocabs/purposes#> .
+@base <http://www.specialprivacy.eu/langs/usage-policy-ontology> .
+
+<http://www.specialprivacy.eu/langs/usage-policy-ontology> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://www.specialprivacy.eu/langs/usage-policy#hasData
+spl:hasData rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain spl:Authorization ;
+            rdfs:range spl:AnyData .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#hasDuration
+spl:hasDuration rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain spl:AnyStorage ;
+                rdfs:range spl:AnyDuration .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#hasLocation
+spl:hasLocation rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain spl:AnyStorage ;
+                rdfs:range spl:AnyLocation .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#hasProcessing
+spl:hasProcessing rdf:type owl:ObjectProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain spl:Authorization ;
+                  rdfs:range spl:AnyProcessing .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#hasPurpose
+spl:hasPurpose rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain spl:Authorization ;
+               rdfs:range spl:AnyPurpose .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#hasRecipient
+spl:hasRecipient rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain spl:Authorization ;
+                 rdfs:range [ rdf:type owl:Class ;
+                              owl:unionOf ( spl:AnyRecipient
+                                            spl:Null
+                                          )
+                            ] .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#hasStorage
+spl:hasStorage rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain spl:Authorization ;
+               rdfs:range [ rdf:type owl:Class ;
+                            owl:unionOf ( spl:AnyStorage
+                                          spl:Null
+                                        )
+                          ] .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://www.specialprivacy.eu/langs/usage-policy#durationInDays
+spl:durationInDays rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain spl:AnyStorage ;
+                   rdfs:range xsd:positiveInteger .
+
+
+#################################################################
+#    Classes
+#################################################################
 
 ###  http://w3id.org/semcon/ns/policy#CurrentData
 scp:CurrentData rdf:type owl:Class ;
@@ -54,6 +134,11 @@ scp:Measurement rdf:type owl:Class ;
                 rdfs:subClassOf scp:Meteorology .
 
 
+###  http://w3id.org/semcon/ns/policy#MeteorologicalService
+scp:MeteorologicalService rdf:type owl:Class ;
+                          rdfs:subClassOf spl:AnyPurpose .
+
+
 ###  http://w3id.org/semcon/ns/policy#Meteorology
 scp:Meteorology rdf:type owl:Class ;
                 rdfs:subClassOf scp:EarthObservation .
@@ -68,566 +153,580 @@ scp:RasterData rdf:type owl:Class ;
 scp:Seismology rdf:type owl:Class ;
                rdfs:subClassOf scp:Geophysics .
 
-svdu:Indefinitely  a     owl:Class ;
-        rdfs:subClassOf  spl:AnyDuration .
 
-svpu:Government  a       owl:Class ;
-        rdfs:subClassOf  svpu:Current .
+###  http://www.specialprivacy.eu/vocabs/data#Activity
+svd:Activity rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyData .
 
-spl:hasPurpose  a  owl:ObjectProperty .
 
-spl:hasRecipient  a  owl:ObjectProperty .
+###  http://www.specialprivacy.eu/vocabs/data#Anonymized
+svd:Anonymized rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyData .
 
-svd:Activity  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
 
-svpu:Login  a            owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
+###  http://www.specialprivacy.eu/vocabs/data#AudiovisualActivity
+svd:AudiovisualActivity rdf:type owl:Class ;
+                        rdfs:subClassOf svd:Activity .
 
-svpu:AuxPurpose  a       owl:Class ;
-        rdfs:subClassOf  spl:AnyPurpose .
 
-svpu:Account  a          owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
+###  http://www.specialprivacy.eu/vocabs/data#Computer
+svd:Computer rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyData .
 
-spl:hasLocation  a   owl:ObjectProperty , owl:FunctionalProperty ;
-        rdfs:domain  spl:AnyStorage ;
-        rdfs:range   spl:AnyLocation .
 
-svpu:Delivery  a         owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
+###  http://www.specialprivacy.eu/vocabs/data#Content
+svd:Content rdf:type owl:Class ;
+            rdfs:subClassOf spl:AnyData .
 
-svpr:Transfer  a         owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
 
-spl:hasData  a       owl:ObjectProperty , owl:FunctionalProperty ;
-        rdfs:domain  spl:Authorization ;
-        rdfs:range   spl:AnyData .
+###  http://www.specialprivacy.eu/vocabs/data#Demographic
+svd:Demographic rdf:type owl:Class ;
+                rdfs:subClassOf spl:AnyData .
 
-svd:Preference  a        owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
 
-svd:Content  a           owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
+###  http://www.specialprivacy.eu/vocabs/data#Derived
+svd:Derived rdf:type owl:Class ;
+            rdfs:subClassOf spl:AnyData .
 
-svd:Government  a         owl:Class ;
-        rdfs:subClassOf   spl:AnyData ;
-        owl:disjointWith  svd:UniqueId .
 
-svl:OtherCountries  a    owl:Class ;
-        rdfs:subClassOf  spl:AnyLocation .
+###  http://www.specialprivacy.eu/vocabs/data#Financial
+svd:Financial rdf:type owl:Class ;
+              rdfs:subClassOf spl:AnyData .
 
-spl:hasRecipient  a  owl:ObjectProperty , owl:FunctionalProperty ;
-        rdfs:domain  spl:Authorization ;
-        rdfs:range   [ a            owl:Class ;
-                       owl:unionOf  [ a          rdf:List ;
-                                      rdf:first  spl:AnyRecipient ;
-                                      rdf:rest   [ a          rdf:List ;
-                                                   rdf:first  spl:Null ;
-                                                   rdf:rest   ()
-                                                 ]
-                                    ]
-                     ] .
 
-svd:Purchase  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
+###  http://www.specialprivacy.eu/vocabs/data#Government
+svd:Government rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyData ;
+               owl:disjointWith svd:UniqueId .
 
-svpu:Downloads  a        owl:Class ;
-        rdfs:subClassOf  svpu:Current .
 
-svl:EU  a                owl:Class ;
-        rdfs:subClassOf  spl:AnyLocation .
+###  http://www.specialprivacy.eu/vocabs/data#Health
+svd:Health rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyData .
 
-svpu:Charity  a          owl:Class ;
-        rdfs:subClassOf  svpu:Current .
 
-svr:Delivery  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyRecipient .
+###  http://www.specialprivacy.eu/vocabs/data#Interactive
+svd:Interactive rdf:type owl:Class ;
+                rdfs:subClassOf spl:AnyData .
 
-svd:Statistical  a       owl:Class ;
-        rdfs:subClassOf  svd:Derived .
 
-svpr:Aggregate  a        owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
+###  http://www.specialprivacy.eu/vocabs/data#Judicial
+svd:Judicial rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyData .
 
-<http://www.specialprivacy.eu/langs/usage-policy-ontology>
-        a               owl:Ontology .
 
-svl:ProcessorServers  a  owl:Class ;
-        rdfs:subClassOf  spl:AnyLocation .
+###  http://www.specialprivacy.eu/vocabs/data#Location
+svd:Location rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyData .
 
-svd:AudiovisualActivity
-        a                owl:Class ;
-        rdfs:subClassOf  svd:Activity .
 
-svd:Judicial  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
+###  http://www.specialprivacy.eu/vocabs/data#Navigation
+svd:Navigation rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyData .
 
-svpr:Copy  a             owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
 
-svpr:Analyse  a          owl:Class ;
-        rdfs:subClassOf  svpr:Derive .
+###  http://www.specialprivacy.eu/vocabs/data#Online
+svd:Online rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyData .
 
-svpu:Telemarketing  a    owl:Class ;
-        rdfs:subClassOf  svpu:AnyContact .
 
-svpu:Admin  a            owl:Class ;
-        rdfs:subClassOf  spl:AnyPurpose .
+###  http://www.specialprivacy.eu/vocabs/data#OnlineActivity
+svd:OnlineActivity rdf:type owl:Class ;
+                   rdfs:subClassOf svd:Activity ;
+                   owl:disjointWith svd:PhysicalActivity .
 
-svdu:LegalRequirement
-        a                owl:Class ;
-        rdfs:subClassOf  spl:AnyDuration .
 
-svpu:Education  a        owl:Class ;
-        rdfs:subClassOf  svpu:Current .
+###  http://www.specialprivacy.eu/vocabs/data#Physical
+svd:Physical rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyData .
 
-spl:Authorization  a  owl:Class .
 
-spl:AnyStorage  a  owl:Class .
+###  http://www.specialprivacy.eu/vocabs/data#PhysicalActivity
+svd:PhysicalActivity rdf:type owl:Class ;
+                     rdfs:subClassOf svd:Activity .
 
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  svr:Delivery ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  svr:OtherRecipient ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  svr:Ours ;
-                                           rdf:rest   [ a          rdf:List ;
-                                                        rdf:first  svr:Public ;
-                                                        rdf:rest   [ a          rdf:List ;
-                                                                     rdf:first  svr:Same ;
-                                                                     rdf:rest   [ a          rdf:List ;
-                                                                                  rdf:first  svr:Unrelated ;
-                                                                                  rdf:rest   ()
-                                                                                ]
-                                                                   ]
-                                                      ]
-                                         ]
-                            ]
-               ]
+
+###  http://www.specialprivacy.eu/vocabs/data#Political
+svd:Political rdf:type owl:Class ;
+              rdfs:subClassOf spl:AnyData .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#Preference
+svd:Preference rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyData .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#Profile
+svd:Profile rdf:type owl:Class ;
+            rdfs:subClassOf svd:Derived .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#Purchase
+svd:Purchase rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyData .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#Social
+svd:Social rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyData .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#State
+svd:State rdf:type owl:Class ;
+          rdfs:subClassOf spl:AnyData .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#Statistical
+svd:Statistical rdf:type owl:Class ;
+                rdfs:subClassOf svd:Derived .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#TelecomActivity
+svd:TelecomActivity rdf:type owl:Class ;
+                    rdfs:subClassOf svd:Activity .
+
+
+###  http://www.specialprivacy.eu/vocabs/data#UniqueId
+svd:UniqueId rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyData .
+
+
+###  http://www.specialprivacy.eu/vocabs/duration#BusinessPractices
+svdu:BusinessPractices rdf:type owl:Class ;
+                       rdfs:subClassOf spl:AnyDuration .
+
+
+###  http://www.specialprivacy.eu/vocabs/duration#Indefinitely
+svdu:Indefinitely rdf:type owl:Class ;
+                  rdfs:subClassOf spl:AnyDuration .
+
+
+###  http://www.specialprivacy.eu/vocabs/duration#LegalRequirement
+svdu:LegalRequirement rdf:type owl:Class ;
+                      rdfs:subClassOf spl:AnyDuration .
+
+
+###  http://www.specialprivacy.eu/vocabs/duration#StatedPurpose
+svdu:StatedPurpose rdf:type owl:Class ;
+                   rdfs:subClassOf spl:AnyDuration .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Aggregate
+svpr:Aggregate rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Analyse
+svpr:Analyse rdf:type owl:Class ;
+             rdfs:subClassOf svpr:Derive .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Anonymize
+svpr:Anonymize rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Collect
+svpr:Collect rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Copy
+svpr:Copy rdf:type owl:Class ;
+          rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Derive
+svpr:Derive rdf:type owl:Class ;
+            rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Move
+svpr:Move rdf:type owl:Class ;
+          rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Query
+svpr:Query rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/processing#Transfer
+svpr:Transfer rdf:type owl:Class ;
+              rdfs:subClassOf spl:AnyProcessing .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Account
+svpu:Account rdf:type owl:Class ;
+             rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Admin
+svpu:Admin rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#AnyContact
+svpu:AnyContact rdf:type owl:Class ;
+                rdfs:subClassOf spl:AnyPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Arts
+svpu:Arts rdf:type owl:Class ;
+          rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#AuxPurpose
+svpu:AuxPurpose rdf:type owl:Class ;
+                rdfs:subClassOf spl:AnyPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Browsing
+svpu:Browsing rdf:type owl:Class ;
+              rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Charity
+svpu:Charity rdf:type owl:Class ;
+             rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Communicate
+svpu:Communicate rdf:type owl:Class ;
+                 rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Current
+svpu:Current rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Custom
+svpu:Custom rdf:type owl:Class ;
+            rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Delivery
+svpu:Delivery rdf:type owl:Class ;
+              rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Develop
+svpu:Develop rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Downloads
+svpu:Downloads rdf:type owl:Class ;
+               rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Education
+svpu:Education rdf:type owl:Class ;
+               rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Feedback
+svpu:Feedback rdf:type owl:Class ;
+              rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Finmgt
+svpu:Finmgt rdf:type owl:Class ;
+            rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Gambling
+svpu:Gambling rdf:type owl:Class ;
+              rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Gaming
+svpu:Gaming rdf:type owl:Class ;
+            rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Government
+svpu:Government rdf:type owl:Class ;
+                rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Health
+svpu:Health rdf:type owl:Class ;
+            rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Historical
+svpu:Historical rdf:type owl:Class ;
+                rdfs:subClassOf spl:AnyPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Login
+svpu:Login rdf:type owl:Class ;
+           rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Marketing
+svpu:Marketing rdf:type owl:Class ;
+               rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#News
+svpu:News rdf:type owl:Class ;
+          rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#OtherContact
+svpu:OtherContact rdf:type owl:Class ;
+                  rdfs:subClassOf svpu:AnyContact ;
+                  owl:disjointWith svpu:Telemarketing .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Payment
+svpu:Payment rdf:type owl:Class ;
+             rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Sales
+svpu:Sales rdf:type owl:Class ;
+           rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Search
+svpu:Search rdf:type owl:Class ;
+            rdfs:subClassOf svpu:Current .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#State
+svpu:State rdf:type owl:Class ;
+           rdfs:subClassOf svpu:AuxPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Tailoring
+svpu:Tailoring rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyPurpose .
+
+
+###  http://www.specialprivacy.eu/vocabs/purposes#Telemarketing
+svpu:Telemarketing rdf:type owl:Class ;
+                   rdfs:subClassOf svpu:AnyContact .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#AnyData
+spl:AnyData rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#AnyDuration
+spl:AnyDuration rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#AnyLocation
+spl:AnyLocation rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#AnyProcessing
+spl:AnyProcessing rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#AnyPurpose
+spl:AnyPurpose rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#AnyRecipient
+spl:AnyRecipient rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#AnyStorage
+spl:AnyStorage rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#Authorization
+spl:Authorization rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasData ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasProcessing ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasPurpose ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasRecipient ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasStorage ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] .
+
+
+###  https://www.specialprivacy.eu/langs/usage-policy#Null
+spl:Null rdf:type owl:Class .
+
+
+###  https://www.specialprivacy.eu/vocabs/locations#ControllerServers
+svl:ControllerServers rdf:type owl:Class ;
+                      rdfs:subClassOf spl:AnyLocation .
+
+
+###  https://www.specialprivacy.eu/vocabs/locations#EU
+svl:EU rdf:type owl:Class ;
+       rdfs:subClassOf spl:AnyLocation .
+
+
+###  https://www.specialprivacy.eu/vocabs/locations#EULike
+svl:EULike rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyLocation .
+
+
+###  https://www.specialprivacy.eu/vocabs/locations#OtherCountries
+svl:OtherCountries rdf:type owl:Class ;
+                   rdfs:subClassOf spl:AnyLocation .
+
+
+###  https://www.specialprivacy.eu/vocabs/locations#ProcessorServers
+svl:ProcessorServers rdf:type owl:Class ;
+                     rdfs:subClassOf spl:AnyLocation .
+
+
+###  https://www.specialprivacy.eu/vocabs/locations#ThirdParty
+svl:ThirdParty rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyLocation .
+
+
+###  https://www.specialprivacy.eu/vocabs/recipients#Delivery
+svr:Delivery rdf:type owl:Class ;
+             rdfs:subClassOf spl:AnyRecipient .
+
+
+###  https://www.specialprivacy.eu/vocabs/recipients#OtherRecipient
+svr:OtherRecipient rdf:type owl:Class ;
+                   rdfs:subClassOf spl:AnyRecipient .
+
+
+###  https://www.specialprivacy.eu/vocabs/recipients#Ours
+svr:Ours rdf:type owl:Class ;
+         rdfs:subClassOf spl:AnyRecipient .
+
+
+###  https://www.specialprivacy.eu/vocabs/recipients#Public
+svr:Public rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyRecipient .
+
+
+###  https://www.specialprivacy.eu/vocabs/recipients#Same
+svr:Same rdf:type owl:Class ;
+         rdfs:subClassOf spl:AnyRecipient .
+
+
+###  https://www.specialprivacy.eu/vocabs/recipients#Unrelated
+svr:Unrelated rdf:type owl:Class ;
+              rdfs:subClassOf spl:AnyRecipient .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svdu:BusinessPractices
+                svdu:Indefinitely
+                svdu:LegalRequirement
+                svdu:StatedPurpose
+              )
 ] .
 
-svd:Anonymized  a        owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
 
-spl:AnyProcessing  a  owl:Class .
-
-svpu:Sales  a            owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  svpu:Admin ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  svpu:AnyContact ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  svpu:AuxPurpose ;
-                                           rdf:rest   [ a          rdf:List ;
-                                                        rdf:first  svpu:Current ;
-                                                        rdf:rest   [ a          rdf:List ;
-                                                                     rdf:first  svpu:Develop ;
-                                                                     rdf:rest   [ a          rdf:List ;
-                                                                                  rdf:first  svpu:Historical ;
-                                                                                  rdf:rest   [ a          rdf:List ;
-                                                                                               rdf:first  svpu:Tailoring ;
-                                                                                               rdf:rest   ()
-                                                                                             ]
-                                                                                ]
-                                                                   ]
-                                                      ]
-                                         ]
-                            ]
-               ]
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svpu:Account
+                svpu:Custom
+                svpu:Delivery
+                svpu:Feedback
+                svpu:Login
+                svpu:Marketing
+                svpu:Payment
+                svpu:State
+              )
 ] .
 
-spl:durationInDays  a  owl:FunctionalProperty , owl:DatatypeProperty ;
-        rdfs:domain  spl:AnyStorage ;
-        rdfs:range   xsd:positiveInteger .
 
-spl:AnyDuration  a  owl:Class .
-
-spl:hasProcessing  a  owl:ObjectProperty , owl:FunctionalProperty ;
-        rdfs:domain  spl:Authorization ;
-        rdfs:range   spl:AnyProcessing .
-
-svl:ControllerServers
-        a                owl:Class ;
-        rdfs:subClassOf  spl:AnyLocation .
-
-svd:PhysicalActivity  a  owl:Class ;
-        rdfs:subClassOf  svd:Activity .
-
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  svl:ControllerServers ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  svl:ProcessorServers ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  svl:ThirdParty ;
-                                           rdf:rest   ()
-                                         ]
-                            ]
-               ]
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svpu:Admin
+                svpu:AnyContact
+                svpu:AuxPurpose
+                svpu:Current
+                svpu:Develop
+                svpu:Historical
+                svpu:Tailoring
+              )
 ] .
 
-svpu:AnyContact  a       owl:Class ;
-        rdfs:subClassOf  spl:AnyPurpose .
 
-svpu:Custom  a           owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
-
-svd:Online  a            owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svd:UniqueId  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svpr:Move  a             owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
-
-svdu:BusinessPractices
-        a                owl:Class ;
-        rdfs:subClassOf  spl:AnyDuration .
-
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  svl:EU ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  svl:EULike ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  svl:OtherCountries ;
-                                           rdf:rest   ()
-                                         ]
-                            ]
-               ]
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svpu:Arts
+                svpu:Browsing
+                svpu:Charity
+                svpu:Communicate
+                svpu:Downloads
+                svpu:Education
+                svpu:Finmgt
+                svpu:Gambling
+                svpu:Gaming
+                svpu:Government
+                svpu:Health
+                svpu:News
+                svpu:Sales
+                svpu:Search
+              )
 ] .
 
-svd:Social  a            owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
 
-svd:Political  a         owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svpr:Query  a            owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
-
-svpu:Payment  a          owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
-
-svd:State  a             owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  svpu:Account ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  svpu:Custom ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  svpu:Delivery ;
-                                           rdf:rest   [ a          rdf:List ;
-                                                        rdf:first  svpu:Feedback ;
-                                                        rdf:rest   [ a          rdf:List ;
-                                                                     rdf:first  svpu:Login ;
-                                                                     rdf:rest   [ a          rdf:List ;
-                                                                                  rdf:first  svpu:Marketing ;
-                                                                                  rdf:rest   [ a          rdf:List ;
-                                                                                               rdf:first  svpu:Payment ;
-                                                                                               rdf:rest   [ a          rdf:List ;
-                                                                                                            rdf:first  svpu:State ;
-                                                                                                            rdf:rest   ()
-                                                                                                          ]
-                                                                                             ]
-                                                                                ]
-                                                                   ]
-                                                      ]
-                                         ]
-                            ]
-               ]
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( spl:AnyData
+                spl:AnyDuration
+                spl:AnyLocation
+                spl:AnyProcessing
+                spl:AnyPurpose
+                spl:AnyRecipient
+                spl:AnyStorage
+                spl:Authorization
+                spl:Null
+              )
 ] .
 
-spl:hasStorage  a    owl:ObjectProperty , owl:FunctionalProperty ;
-        rdfs:domain  spl:Authorization ;
-        rdfs:range   [ a            owl:Class ;
-                       owl:unionOf  [ a          rdf:List ;
-                                      rdf:first  spl:AnyStorage ;
-                                      rdf:rest   [ a          rdf:List ;
-                                                   rdf:first  spl:Null ;
-                                                   rdf:rest   ()
-                                                 ]
-                                    ]
-                     ] .
 
-svr:Unrelated  a         owl:Class ;
-        rdfs:subClassOf  spl:AnyRecipient .
-
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  spl:AnyData ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  spl:AnyDuration ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  spl:AnyLocation ;
-                                           rdf:rest   [ a          rdf:List ;
-                                                        rdf:first  spl:AnyProcessing ;
-                                                        rdf:rest   [ a          rdf:List ;
-                                                                     rdf:first  spl:AnyPurpose ;
-                                                                     rdf:rest   [ a          rdf:List ;
-                                                                                  rdf:first  spl:AnyRecipient ;
-                                                                                  rdf:rest   [ a          rdf:List ;
-                                                                                               rdf:first  spl:AnyStorage ;
-                                                                                               rdf:rest   [ a          rdf:List ;
-                                                                                                            rdf:first  spl:Authorization ;
-                                                                                                            rdf:rest   [ a          rdf:List ;
-                                                                                                                         rdf:first  spl:Null ;
-                                                                                                                         rdf:rest   ()
-                                                                                                                       ]
-                                                                                                          ]
-                                                                                             ]
-                                                                                ]
-                                                                   ]
-                                                      ]
-                                         ]
-                            ]
-               ]
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svl:ControllerServers
+                svl:ProcessorServers
+                svl:ThirdParty
+              )
 ] .
 
-svpu:Communicate  a      owl:Class ;
-        rdfs:subClassOf  svpu:Current .
 
-svd:Interactive  a       owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-spl:hasStorage  a  owl:ObjectProperty .
-
-svpu:Historical  a       owl:Class ;
-        rdfs:subClassOf  spl:AnyPurpose .
-
-svd:Physical  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-spl:Authorization  a       owl:Class ;
-        owl:equivalentClass  [ a                   owl:Class ;
-                               owl:intersectionOf  [ a          rdf:List ;
-                                                     rdf:first  [ a                   owl:Restriction ;
-                                                                  owl:onProperty      spl:hasData ;
-                                                                  owl:someValuesFrom  owl:Thing
-                                                                ] ;
-                                                     rdf:rest   [ a          rdf:List ;
-                                                                  rdf:first  [ a                   owl:Restriction ;
-                                                                               owl:onProperty      spl:hasProcessing ;
-                                                                               owl:someValuesFrom  owl:Thing
-                                                                             ] ;
-                                                                  rdf:rest   [ a          rdf:List ;
-                                                                               rdf:first  [ a                   owl:Restriction ;
-                                                                                            owl:onProperty      spl:hasPurpose ;
-                                                                                            owl:someValuesFrom  owl:Thing
-                                                                                          ] ;
-                                                                               rdf:rest   [ a          rdf:List ;
-                                                                                            rdf:first  [ a                   owl:Restriction ;
-                                                                                                         owl:onProperty      spl:hasRecipient ;
-                                                                                                         owl:someValuesFrom  owl:Thing
-                                                                                                       ] ;
-                                                                                            rdf:rest   [ a          rdf:List ;
-                                                                                                         rdf:first  [ a                   owl:Restriction ;
-                                                                                                                      owl:onProperty      spl:hasStorage ;
-                                                                                                                      owl:someValuesFrom  owl:Thing
-                                                                                                                    ] ;
-                                                                                                         rdf:rest   ()
-                                                                                                       ]
-                                                                                          ]
-                                                                             ]
-                                                                ]
-                                                   ]
-                             ] .
-
-svpu:Marketing  a        owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
-
-svpu:Health  a           owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-svpr:Derive  a           owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
-
-svpu:Search  a           owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-svpu:Tailoring  a        owl:Class ;
-        rdfs:subClassOf  spl:AnyPurpose .
-
-svpu:Arts  a             owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-spl:hasProcessing  a  owl:ObjectProperty .
-
-spl:hasDuration  a   owl:ObjectProperty , owl:FunctionalProperty ;
-        rdfs:domain  spl:AnyStorage ;
-        rdfs:range   spl:AnyDuration .
-
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  svpu:Arts ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  svpu:Browsing ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  svpu:Charity ;
-                                           rdf:rest   [ a          rdf:List ;
-                                                        rdf:first  svpu:Communicate ;
-                                                        rdf:rest   [ a          rdf:List ;
-                                                                     rdf:first  svpu:Downloads ;
-                                                                     rdf:rest   [ a          rdf:List ;
-                                                                                  rdf:first  svpu:Education ;
-                                                                                  rdf:rest   [ a          rdf:List ;
-                                                                                               rdf:first  svpu:Finmgt ;
-                                                                                               rdf:rest   [ a          rdf:List ;
-                                                                                                            rdf:first  svpu:Gambling ;
-                                                                                                            rdf:rest   [ a          rdf:List ;
-                                                                                                                         rdf:first  svpu:Gaming ;
-                                                                                                                         rdf:rest   [ a          rdf:List ;
-                                                                                                                                      rdf:first  svpu:Government ;
-                                                                                                                                      rdf:rest   [ a          rdf:List ;
-                                                                                                                                                   rdf:first  svpu:Health ;
-                                                                                                                                                   rdf:rest   [ a          rdf:List ;
-                                                                                                                                                                rdf:first  svpu:News ;
-                                                                                                                                                                rdf:rest   [ a          rdf:List ;
-                                                                                                                                                                             rdf:first  svpu:Sales ;
-                                                                                                                                                                             rdf:rest   [ a          rdf:List ;
-                                                                                                                                                                                          rdf:first  svpu:Search ;
-                                                                                                                                                                                          rdf:rest   ()
-                                                                                                                                                                                        ]
-                                                                                                                                                                           ]
-                                                                                                                                                              ]
-                                                                                                                                                 ]
-                                                                                                                                    ]
-                                                                                                                       ]
-                                                                                                          ]
-                                                                                             ]
-                                                                                ]
-                                                                   ]
-                                                      ]
-                                         ]
-                            ]
-               ]
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svl:EU
+                svl:EULike
+                svl:OtherCountries
+              )
 ] .
 
-[ a            owl:AllDisjointClasses ;
-  owl:members  [ a          rdf:List ;
-                 rdf:first  svdu:BusinessPractices ;
-                 rdf:rest   [ a          rdf:List ;
-                              rdf:first  svdu:Indefinitely ;
-                              rdf:rest   [ a          rdf:List ;
-                                           rdf:first  svdu:LegalRequirement ;
-                                           rdf:rest   [ a          rdf:List ;
-                                                        rdf:first  svdu:StatedPurpose ;
-                                                        rdf:rest   ()
-                                                      ]
-                                         ]
-                            ]
-               ]
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svr:Delivery
+                svr:OtherRecipient
+                svr:Ours
+                svr:Public
+                svr:Same
+                svr:Unrelated
+              )
 ] .
 
-svpu:Current  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyPurpose .
 
-svpu:News  a             owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-svr:Same  a              owl:Class ;
-        rdfs:subClassOf  spl:AnyRecipient .
-
-svd:Derived  a           owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svpu:State  a            owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
-
-svd:Location  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-spl:hasData  a  owl:ObjectProperty .
-
-spl:AnyLocation  a  owl:Class .
-
-svpu:OtherContact  a      owl:Class ;
-        rdfs:subClassOf   svpu:AnyContact ;
-        owl:disjointWith  svpu:Telemarketing .
-
-svpu:Feedback  a         owl:Class ;
-        rdfs:subClassOf  svpu:AuxPurpose .
-
-spl:Null  a     owl:Class .
-
-svdu:StatedPurpose  a    owl:Class ;
-        rdfs:subClassOf  spl:AnyDuration .
-
-svl:ThirdParty  a        owl:Class ;
-        rdfs:subClassOf  spl:AnyLocation .
-
-spl:AnyPurpose  a  owl:Class .
-
-svpr:Anonymize  a        owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
-
-svpu:Finmgt  a           owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-svd:Financial  a         owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svpr:Collect  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyProcessing .
-
-spl:AnyRecipient  a  owl:Class .
-
-svd:Computer  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svd:Health  a            owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svpu:Browsing  a         owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-svd:TelecomActivity  a   owl:Class ;
-        rdfs:subClassOf  svd:Activity .
-
-svpu:Gambling  a         owl:Class ;
-        rdfs:subClassOf  svpu:Current .
-
-svr:Ours  a              owl:Class ;
-        rdfs:subClassOf  spl:AnyRecipient .
-
-svr:OtherRecipient  a    owl:Class ;
-        rdfs:subClassOf  spl:AnyRecipient .
-
-svd:OnlineActivity  a     owl:Class ;
-        rdfs:subClassOf   svd:Activity ;
-        owl:disjointWith  svd:PhysicalActivity .
-
-svr:Public  a            owl:Class ;
-        rdfs:subClassOf  spl:AnyRecipient .
-
-svd:Navigation  a        owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svl:EULike  a            owl:Class ;
-        rdfs:subClassOf  spl:AnyLocation .
-
-svd:Demographic  a       owl:Class ;
-        rdfs:subClassOf  spl:AnyData .
-
-svpu:Develop  a          owl:Class ;
-        rdfs:subClassOf  spl:AnyPurpose .
-
-svd:Profile  a           owl:Class ;
-        rdfs:subClassOf  svd:Derived .
-
-spl:AnyData  a  owl:Class .
-
-spl:hasPurpose  a    owl:ObjectProperty , owl:FunctionalProperty ;
-        rdfs:domain  spl:Authorization ;
-        rdfs:range   spl:AnyPurpose .
-
-svpu:Gaming  a           owl:Class ;
-        rdfs:subClassOf  svpu:Current .
+###  Generated by the OWL API (version 4.5.6.2018-09-06T00:27:41Z) https://github.com/owlcs/owlapi
