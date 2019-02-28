@@ -12,6 +12,61 @@
 @prefix svl:   <https://www.specialprivacy.eu/vocabs/locations#> .
 @prefix svr:   <https://www.specialprivacy.eu/vocabs/recipients#> .
 @prefix spl:   <https://www.specialprivacy.eu/langs/usage-policy#> .
+@prefix scp: <http://w3id.org/semcon/ns/policy#> .
+
+###  http://w3id.org/semcon/ns/policy#CurrentData
+scp:CurrentData rdf:type owl:Class ;
+                rdfs:subClassOf scp:Meteorology .
+
+
+###  http://w3id.org/semcon/ns/policy#EarthObservation
+scp:EarthObservation rdf:type owl:Class ;
+                     rdfs:subClassOf spl:AnyData .
+
+
+###  http://w3id.org/semcon/ns/policy#Forecast
+scp:Forecast rdf:type owl:Class ;
+             rdfs:subClassOf scp:Meteorology .
+
+
+###  http://w3id.org/semcon/ns/policy#Geophysics
+scp:Geophysics rdf:type owl:Class ;
+               rdfs:subClassOf scp:EarthObservation .
+
+
+###  http://w3id.org/semcon/ns/policy#Gravimetry
+scp:Gravimetry rdf:type owl:Class ;
+               rdfs:subClassOf scp:Geophysics .
+
+
+###  http://w3id.org/semcon/ns/policy#HistoricalData
+scp:HistoricalData rdf:type owl:Class ;
+                   rdfs:subClassOf scp:Meteorology .
+
+
+###  http://w3id.org/semcon/ns/policy#MagneticField
+scp:MagneticField rdf:type owl:Class ;
+                  rdfs:subClassOf scp:Geophysics .
+
+
+###  http://w3id.org/semcon/ns/policy#Measurement
+scp:Measurement rdf:type owl:Class ;
+                rdfs:subClassOf scp:Meteorology .
+
+
+###  http://w3id.org/semcon/ns/policy#Meteorology
+scp:Meteorology rdf:type owl:Class ;
+                rdfs:subClassOf scp:EarthObservation .
+
+
+###  http://w3id.org/semcon/ns/policy#RasterData
+scp:RasterData rdf:type owl:Class ;
+               rdfs:subClassOf scp:Meteorology .
+
+
+###  http://w3id.org/semcon/ns/policy#Seismology
+scp:Seismology rdf:type owl:Class ;
+               rdfs:subClassOf scp:Geophysics .
 
 svdu:Indefinitely  a     owl:Class ;
         rdfs:subClassOf  spl:AnyDuration .
