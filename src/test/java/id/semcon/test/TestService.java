@@ -99,7 +99,7 @@ public class TestService {
         usagePolicyString = IOUtils.toString(usagePolicyLocationIS, "UTF-8");
         usagePolicyLocationIS.close();
         res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
-        assertEquals(500, res.status);
+        assertEquals(200, res.status);
 
         InputStream usagePolicyISFalse =
                 TestService.class.getClassLoader().getResourceAsStream("usage-policy/false-template.ttl");
@@ -124,6 +124,17 @@ public class TestService {
         usagePolicyString = IOUtils.toString(usagePolicyISFalse, "UTF-8");
         usagePolicyISFalse.close();
         res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(500, res.status);
+    }
+
+    @Test public void testUsagePolicyFromChristoph() throws IOException {
+        String testUrl = "/api/validate/usage-policy";
+
+        InputStream complexUsagePolicyIS =
+                TestService.class.getClassLoader().getResourceAsStream("test/invalid_match.ttl");
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(500, res.status);
     }
 
