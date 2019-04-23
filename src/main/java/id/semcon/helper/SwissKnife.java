@@ -61,6 +61,7 @@ public class SwissKnife {
     public static boolean policyCheck(Model policyModel, Resource dataSubjectPolicy, Resource dataControllerPolicy) {
         Model model = ModelFactory.createDefaultModel();
         model.add(policyModel);
+        RDFDataMgr.write(System.out, model, Lang.TURTLE);
         model.add(specialModel);
 
         Reasoner reasoner = PelletReasonerFactory.theInstance().create();
