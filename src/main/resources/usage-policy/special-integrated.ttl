@@ -3,10 +3,10 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix scp: <http://w3id.org/semcon/ns/policy#> .
-@prefix spl: <https://www.specialprivacy.eu/langs/usage-policy#> .
+@prefix spl: <http://www.specialprivacy.eu/langs/usage-policy#> .
 @prefix svd: <http://www.specialprivacy.eu/vocabs/data#> .
-@prefix svl: <https://www.specialprivacy.eu/vocabs/locations#> .
-@prefix svr: <https://www.specialprivacy.eu/vocabs/recipients#> .
+@prefix svl: <http://www.specialprivacy.eu/vocabs/locations#> .
+@prefix svr: <http://www.specialprivacy.eu/vocabs/recipients#> .
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -22,42 +22,42 @@
 #    Object Properties
 #################################################################
 
-###  https://www.specialprivacy.eu/langs/usage-policy#hasData
+###  http://www.specialprivacy.eu/langs/usage-policy#hasData
 spl:hasData rdf:type owl:ObjectProperty ,
                      owl:FunctionalProperty ;
             rdfs:domain spl:Authorization ;
             rdfs:range spl:AnyData .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#hasDuration
+###  http://www.specialprivacy.eu/langs/usage-policy#hasDuration
 spl:hasDuration rdf:type owl:ObjectProperty ,
                          owl:FunctionalProperty ;
                 rdfs:domain spl:AnyStorage ;
                 rdfs:range spl:AnyDuration .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#hasLocation
+###  http://www.specialprivacy.eu/langs/usage-policy#hasLocation
 spl:hasLocation rdf:type owl:ObjectProperty ,
                          owl:FunctionalProperty ;
                 rdfs:domain spl:AnyStorage ;
                 rdfs:range spl:AnyLocation .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#hasProcessing
+###  http://www.specialprivacy.eu/langs/usage-policy#hasProcessing
 spl:hasProcessing rdf:type owl:ObjectProperty ,
                            owl:FunctionalProperty ;
                   rdfs:domain spl:Authorization ;
                   rdfs:range spl:AnyProcessing .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#hasPurpose
+###  http://www.specialprivacy.eu/langs/usage-policy#hasPurpose
 spl:hasPurpose rdf:type owl:ObjectProperty ,
                         owl:FunctionalProperty ;
                rdfs:domain spl:Authorization ;
                rdfs:range spl:AnyPurpose .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#hasRecipient
+###  http://www.specialprivacy.eu/langs/usage-policy#hasRecipient
 spl:hasRecipient rdf:type owl:ObjectProperty ,
                           owl:FunctionalProperty ;
                  rdfs:domain spl:Authorization ;
@@ -68,7 +68,7 @@ spl:hasRecipient rdf:type owl:ObjectProperty ,
                             ] .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#hasStorage
+###  http://www.specialprivacy.eu/langs/usage-policy#hasStorage
 spl:hasStorage rdf:type owl:ObjectProperty ,
                         owl:FunctionalProperty ;
                rdfs:domain spl:Authorization ;
@@ -83,7 +83,7 @@ spl:hasStorage rdf:type owl:ObjectProperty ,
 #    Data properties
 #################################################################
 
-###  https://www.specialprivacy.eu/langs/usage-policy#durationInDays
+###  http://www.specialprivacy.eu/langs/usage-policy#durationInDays
 spl:durationInDays rdf:type owl:DatatypeProperty ,
                             owl:FunctionalProperty ;
                    rdfs:domain spl:AnyStorage ;
@@ -512,35 +512,35 @@ svpu:Telemarketing rdf:type owl:Class ;
                    rdfs:subClassOf svpu:AnyContact .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#AnyData
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyData
 spl:AnyData rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#AnyDuration
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyDuration
 spl:AnyDuration rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#AnyLocation
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyLocation
 spl:AnyLocation rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#AnyProcessing
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyProcessing
 spl:AnyProcessing rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#AnyPurpose
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose
 spl:AnyPurpose rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#AnyRecipient
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyRecipient
 spl:AnyRecipient rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#AnyStorage
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyStorage
 spl:AnyStorage rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#Authorization
+###  http://www.specialprivacy.eu/langs/usage-policy#Authorization
 spl:Authorization rdf:type owl:Class ;
                   owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
                                                                owl:onProperty spl:hasData ;
@@ -567,66 +567,66 @@ spl:Authorization rdf:type owl:Class ;
                                       ] .
 
 
-###  https://www.specialprivacy.eu/langs/usage-policy#Null
+###  http://www.specialprivacy.eu/langs/usage-policy#Null
 spl:Null rdf:type owl:Class .
 
 
-###  https://www.specialprivacy.eu/vocabs/locations#ControllerServers
+###  http://www.specialprivacy.eu/vocabs/locations#ControllerServers
 svl:ControllerServers rdf:type owl:Class ;
                       rdfs:subClassOf spl:AnyLocation .
 
 
-###  https://www.specialprivacy.eu/vocabs/locations#EU
+###  http://www.specialprivacy.eu/vocabs/locations#EU
 svl:EU rdf:type owl:Class ;
        rdfs:subClassOf spl:AnyLocation .
 
 
-###  https://www.specialprivacy.eu/vocabs/locations#EULike
+###  http://www.specialprivacy.eu/vocabs/locations#EULike
 svl:EULike rdf:type owl:Class ;
            rdfs:subClassOf spl:AnyLocation .
 
 
-###  https://www.specialprivacy.eu/vocabs/locations#OtherCountries
+###  http://www.specialprivacy.eu/vocabs/locations#OtherCountries
 svl:OtherCountries rdf:type owl:Class ;
                    rdfs:subClassOf spl:AnyLocation .
 
 
-###  https://www.specialprivacy.eu/vocabs/locations#ProcessorServers
+###  http://www.specialprivacy.eu/vocabs/locations#ProcessorServers
 svl:ProcessorServers rdf:type owl:Class ;
                      rdfs:subClassOf spl:AnyLocation .
 
 
-###  https://www.specialprivacy.eu/vocabs/locations#ThirdParty
+###  http://www.specialprivacy.eu/vocabs/locations#ThirdParty
 svl:ThirdParty rdf:type owl:Class ;
                rdfs:subClassOf spl:AnyLocation .
 
 
-###  https://www.specialprivacy.eu/vocabs/recipients#Delivery
+###  http://www.specialprivacy.eu/vocabs/recipients#Delivery
 svr:Delivery rdf:type owl:Class ;
              rdfs:subClassOf spl:AnyRecipient .
 
 
-###  https://www.specialprivacy.eu/vocabs/recipients#OtherRecipient
+###  http://www.specialprivacy.eu/vocabs/recipients#OtherRecipient
 svr:OtherRecipient rdf:type owl:Class ;
                    rdfs:subClassOf spl:AnyRecipient .
 
 
-###  https://www.specialprivacy.eu/vocabs/recipients#Ours
+###  http://www.specialprivacy.eu/vocabs/recipients#Ours
 svr:Ours rdf:type owl:Class ;
          rdfs:subClassOf spl:AnyRecipient .
 
 
-###  https://www.specialprivacy.eu/vocabs/recipients#Public
+###  http://www.specialprivacy.eu/vocabs/recipients#Public
 svr:Public rdf:type owl:Class ;
            rdfs:subClassOf spl:AnyRecipient .
 
 
-###  https://www.specialprivacy.eu/vocabs/recipients#Same
+###  http://www.specialprivacy.eu/vocabs/recipients#Same
 svr:Same rdf:type owl:Class ;
          rdfs:subClassOf spl:AnyRecipient .
 
 
-###  https://www.specialprivacy.eu/vocabs/recipients#Unrelated
+###  http://www.specialprivacy.eu/vocabs/recipients#Unrelated
 svr:Unrelated rdf:type owl:Class ;
               rdfs:subClassOf spl:AnyRecipient .
 

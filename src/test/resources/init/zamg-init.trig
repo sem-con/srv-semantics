@@ -12,9 +12,9 @@
 @prefix svpu:  <http://www.specialprivacy.eu/vocabs/purposes#> .
 @prefix svd:   <http://www.specialprivacy.eu/vocabs/data#> .
 @prefix svdu:  <http://www.specialprivacy.eu/vocabs/duration#> .
-@prefix svl:   <https://www.specialprivacy.eu/vocabs/locations#> .
-@prefix svr:   <https://www.specialprivacy.eu/vocabs/recipients#> .
-@prefix spl:   <https://www.specialprivacy.eu/langs/usage-policy#> .
+@prefix svl:   <http://www.specialprivacy.eu/vocabs/locations#> .
+@prefix svr:   <http://www.specialprivacy.eu/vocabs/recipients#> .
+@prefix spl:   <http://www.specialprivacy.eu/langs/usage-policy#> .
 # shacl
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
