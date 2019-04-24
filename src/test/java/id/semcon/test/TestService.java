@@ -208,6 +208,7 @@ public class TestService {
 
         JSONObject object = new JSONObject();
         object.put(jsonKey, usagePolicyString);
+        System.out.println(object.toString());
         return request("POST", testUrl, object.toString());
     }
 
