@@ -76,6 +76,7 @@ public class BaseValidationEngine {
                 result = checkBaseConfig(baseDataset, imageConstraintsDS);
             }
         }
+        baseDataset.close();
 
         return result;
     }
@@ -97,7 +98,7 @@ public class BaseValidationEngine {
     private boolean checkValidPolicy(Model namedModel) {
         Model model = ModelFactory.createDefaultModel();
         model.add(namedModel).add(permissivePolicyModel);
-        return SwissKnife.policyCheck(model, containerPolicy, permissivePolicy);
+        return SwissKnife.policyCheck(model, permissivePolicy, containerPolicy);
     }
 
 }

@@ -48,16 +48,10 @@ scr:ContainerConfigurationConstraints
                       sh:minCount  0 ;
                       sh:path      :hasDataConfiguration
                     ] ;
-# -- FOR LATER
-#    sh:property     [ sh:dataType :DataLayer ;
-#             sh:maxCount  1 ;
-#             sh:minCount  1 ;
-#                      sh:path      :hasDataLayer
-#                    ] ;
     sh:targetClass  :ContainerConfiguration .
 
 
-scr:DataConfigurationConstraints 
+scr:DataConfigurationConstraints
     a               sh:NodeShape ;
     sh:closed       true ;
     sh:description  "DataConfiguration validation" ;
@@ -66,28 +60,6 @@ scr:DataConfigurationConstraints
                       sh:minCount  1 ;
                       sh:path      rdf:type
                     ] ;
-# -- FOR LATER
-#    sh:property     [ sh:dataType xsd:boolean ;
-#             sh:maxCount  1 ;
-#             sh:minCount  1 ;
-#             sh:path      :isDataModelExist
-#                    ] ;
-#    sh:property     [ sh:dataType xsd:boolean ;
-#             sh:maxCount  1 ;
-#             sh:minCount  1 ;
-#                      sh:path      :isDataConstraintExist
-#                    ] ;
-#    sh:property     [ sh:dataType xsd:boolean ;
-#             sh:maxCount  1 ;
-#             sh:minCount  1 ;
-#                      sh:path      :isDataMappingExist
-#                    ] ;
-#    sh:property     [ sh:dataType xsd:boolean ;
-#             sh:maxCount  1 ;
-#             sh:minCount  1 ;
-#             sh:hasValue true ;
-#                      sh:path      :isUsagePolicyExist
-#                    ] ;
     sh:property     [ sh:minCount  1 ;
                       sh:path      :hasTag
                     ] ;

@@ -34,18 +34,27 @@ sc:DataSubjectPolicy rdf:type owl:Class ;
             [
                 rdf:type owl:Restriction ;
                 owl:onProperty spl:hasStorage ;
-                owl:intersectionOf (
-                    [
-                        rdf:type owl:Restriction ;
-                        owl:onProperty spl:hasLocation ;
-                        owl:someValuesFrom spl:AnyLocation
-                    ]
-                    [
-                        rdf:type owl:Restriction ;
-                        owl:onProperty spl:hasDuration ;
-                        owl:someValuesFrom svdu:StatedPurpose
-                    ]
-                )
+                owl:someValuesFrom [
+                    owl:intersectionOf (
+                        [
+                            rdf:type owl:Restriction ;
+                            owl:onProperty spl:hasLocation ;
+                            owl:someValuesFrom spl:AnyLocation
+                        ]
+                        [
+                            rdf:type owl:Restriction ;
+                            owl:onProperty spl:durationInDays ;
+                            owl:someValuesFrom [
+                                rdf:type rdfs:Datatype;
+                                owl:onDatatype  xsd:integer;
+                                owl:withRestrictions (
+                                   [ xsd:minInclusive  "20"^^xsd:integer ]
+                                   [ xsd:maxInclusive  "50"^^xsd:integer ]
+                                )
+                            ]
+                        ]
+                    )
+                ]
             ]
         ) ;
         rdf:type owl:Class
@@ -78,18 +87,20 @@ sc:DataControllerPolicy rdf:type owl:Class ;
             [
                 rdf:type owl:Restriction ;
                 owl:onProperty spl:hasStorage ;
-                owl:intersectionOf (
-                    [
-                        rdf:type owl:Restriction ;
-                        owl:onProperty spl:hasLocation ;
-                        owl:someValuesFrom spl:AnyLocation
-                    ]
-                    [
-                        rdf:type owl:Restriction ;
-                        owl:onProperty spl:hasDuration ;
-                        owl:someValuesFrom spl:AnyDuration
-                    ]
-                )
+                owl:someValuesFrom [
+                    owl:intersectionOf (
+                        [
+                            rdf:type owl:Restriction ;
+                            owl:onProperty spl:hasLocation ;
+                            owl:someValuesFrom spl:AnyLocation
+                        ]
+                        [
+                            rdf:type owl:Restriction ;
+                            owl:onProperty spl:hasDuration ;
+                            owl:someValuesFrom spl:AnyDuration
+                        ]
+                    )
+                ]
             ]
         ) ;
         rdf:type owl:Class

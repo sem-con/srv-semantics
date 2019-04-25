@@ -1,16 +1,22 @@
 package id.semcon.helper;
 
-import openllet.jena.PelletReasonerFactory;
+import id.semcon.engine.UsagePolicyEngine;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.ParameterizedSparqlString;
-import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.reasoner.Reasoner;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.vocabulary.RDFS;
+import org.semanticweb.HermiT.ReasonerFactory;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.Node;
+import org.semanticweb.owlapi.reasoner.NodeSet;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -20,6 +26,7 @@ public class SwissKnife {
     public static final String semconNS = "http://w3id.org/semcon/ns/ontology#";
     public static final Model specialModel =
             SwissKnife.initAndLoadModelFromResource("usage-policy/special-integrated.ttl", Lang.TURTLE);
+    private static final Logger log = LoggerFactory.getLogger(SwissKnife.class);
 
     public static File getFileFromResource(String fileName) {
         return new File(SwissKnife.class.getClassLoader().getResource(fileName).getFile());
@@ -59,19 +66,46 @@ public class SwissKnife {
     }
 
     public static boolean policyCheck(Model policyModel, Resource dataSubjectPolicy, Resource dataControllerPolicy) {
-        Model model = ModelFactory.createDefaultModel();
-        model.add(policyModel);
-        RDFDataMgr.write(System.out, model, Lang.TURTLE);
-        model.add(specialModel);
+        StringWriter writer = new StringWriter();
+        policyModel.write(writer);
+        String policyString = writer.toString();
+        return policyCheck(policyString, dataSubjectPolicy, dataControllerPolicy);
 
-        Reasoner reasoner = PelletReasonerFactory.theInstance().create();
-        InfModel eModel = ModelFactory.createInfModel(reasoner, model);
-        Boolean isConform = eModel.contains(dataSubjectPolicy, RDFS.subClassOf, dataControllerPolicy);
+    }
 
-        eModel.close();
-        model.close();
+    public static boolean policyCheck(String policyString, Resource dataSubjectPolicy,
+            Resource dataControllerPolicy) {
+        boolean result = true;
 
-        return isConform;
+        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        OWLDataFactory df = manager.getOWLDataFactory();
 
+        try {
+
+            InputStream is = IOUtils.toInputStream(policyString, "UTF-8");
+            InputStream specialIntegrated = UsagePolicyEngine.class.getClassLoader()
+                    .getResourceAsStream("usage-policy/special-integrated.ttl");
+
+            OWLOntology ontology = manager.loadOntologyFromOntologyDocument(is);
+            ontology.addAxioms(manager.loadOntologyFromOntologyDocument(specialIntegrated).axioms());
+            OWLClass dataControllerCls = df.getOWLClass(IRI.create(dataControllerPolicy.getURI()));
+            OWLClass dataSubjectCls = df.getOWLClass(IRI.create(dataSubjectPolicy.getURI()));
+
+            OWLReasonerFactory rf = new ReasonerFactory();
+            OWLReasoner r = rf.createReasoner(ontology);
+            NodeSet<OWLClass> subClasses = r.getSubClasses(dataSubjectCls);
+            Node<OWLClass> equivalentClass = r.getEquivalentClasses(dataSubjectCls);
+
+            if (!subClasses.containsEntity(dataControllerCls) && !equivalentClass.contains(dataControllerCls)) {
+                result = false;
+            }
+        } catch (OWLOntologyCreationException e) {
+            result = false;
+            log.error(e.getMessage(), e);
+        } catch (IOException e) {
+            result = false;
+            log.error(e.getMessage(), e);
+        }
+        return result;
     }
 }

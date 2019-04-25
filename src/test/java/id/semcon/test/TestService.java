@@ -70,7 +70,7 @@ public class TestService {
         log.info(res.toString());
     }
 
-    @Test public void testUsagePolicy() throws IOException {
+    @Test public void testUsagePolicy1() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -79,33 +79,50 @@ public class TestService {
         complexUsagePolicyIS.close();
         TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(200, res.status);
+    }
 
-        InputStream complexUsagePolicyISFalse =
+    @Test public void testUsagePolicy2() throws IOException {
+        String testUrl = "/api/validate/usage-policy";
+
+        InputStream complexUsagePolicyIS =
                 TestService.class.getClassLoader().getResourceAsStream("usage-policy/false-complex-template.ttl");
-        usagePolicyString = IOUtils.toString(complexUsagePolicyISFalse, "UTF-8");
-        complexUsagePolicyISFalse.close();
-        res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(500, res.status);
+    }
 
-        InputStream usagePolicyIS =
+    @Test public void testUsagePolicy3() throws IOException {
+        String testUrl = "/api/validate/usage-policy";
+
+        InputStream complexUsagePolicyIS =
                 TestService.class.getClassLoader().getResourceAsStream("usage-policy/template.ttl");
-        usagePolicyString = IOUtils.toString(usagePolicyIS, "UTF-8");
-        usagePolicyIS.close();
-        res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(200, res.status);
+    }
 
-        InputStream usagePolicyLocationIS =
+
+    @Test public void testUsagePolicy4() throws IOException {
+        String testUrl = "/api/validate/usage-policy";
+
+        InputStream complexUsagePolicyIS =
                 TestService.class.getClassLoader().getResourceAsStream("test/location-duration.ttl");
-        usagePolicyString = IOUtils.toString(usagePolicyLocationIS, "UTF-8");
-        usagePolicyLocationIS.close();
-        res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(200, res.status);
+    }
 
-        InputStream usagePolicyISFalse =
+    @Test public void testUsagePolicy5() throws IOException {
+        String testUrl = "/api/validate/usage-policy";
+
+        InputStream complexUsagePolicyIS =
                 TestService.class.getClassLoader().getResourceAsStream("usage-policy/false-template.ttl");
-        usagePolicyString = IOUtils.toString(usagePolicyISFalse, "UTF-8");
-        usagePolicyISFalse.close();
-        res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(500, res.status);
     }
 
@@ -113,10 +130,24 @@ public class TestService {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
-                TestService.class.getClassLoader().getResourceAsStream("test/location-duration-false.ttl");
+                TestService.class.getClassLoader().getResourceAsStream("test/location-duration.ttl");
         String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
         complexUsagePolicyIS.close();
         TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(200, res.status);
+
+        complexUsagePolicyIS =
+                TestService.class.getClassLoader().getResourceAsStream("test/location-duration-v2.ttl");
+        usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(200, res.status);
+
+        complexUsagePolicyIS =
+                TestService.class.getClassLoader().getResourceAsStream("test/location-duration-false.ttl");
+        usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(500, res.status);
 
         InputStream usagePolicyISFalse =
@@ -208,7 +239,7 @@ public class TestService {
 
         JSONObject object = new JSONObject();
         object.put(jsonKey, usagePolicyString);
-        System.out.println(object.toString());
+//        System.out.println(object.toString());
         return request("POST", testUrl, object.toString());
     }
 

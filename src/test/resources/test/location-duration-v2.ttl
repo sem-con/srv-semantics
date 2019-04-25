@@ -34,27 +34,21 @@ sc:DataSubjectPolicy rdf:type owl:Class ;
             [
                 rdf:type owl:Restriction ;
                 owl:onProperty spl:hasStorage ;
-                owl:someValuesFrom [
-                    owl:intersectionOf (
-                        [
-                            rdf:type owl:Restriction ;
-                            owl:onProperty spl:hasLocation ;
-                            owl:someValuesFrom spl:AnyLocation
-                        ]
-                        [
-                            rdf:type owl:Restriction ;
-                            owl:onProperty spl:durationInDays ;
-                            owl:someValuesFrom [
-                                rdf:type rdfs:Datatype;
-                                owl:onDatatype  xsd:integer;
-                                owl:withRestrictions (
-                                   [ xsd:minInclusive  "0"^^xsd:integer ]
-                                   [ xsd:maxInclusive  "150"^^xsd:integer ]
-                                )
-                            ]
-                        ]
-                    )
-                ]
+                owl:someValuesFrom spl:AnyStorage
+#                owl:someValuesFrom [
+#                    owl:intersectionOf (
+#                        [
+#                            rdf:type owl:Restriction ;
+#                            owl:onProperty spl:hasLocation ;
+#                            owl:someValuesFrom spl:AnyLocation
+#                        ]
+#                        [
+#                            rdf:type owl:Restriction ;
+#                            owl:onProperty spl:hasDuration ;
+#                            owl:someValuesFrom spl:AnyDuration
+#                        ]
+#                    )
+#                ]
             ]
         ) ;
         rdf:type owl:Class
