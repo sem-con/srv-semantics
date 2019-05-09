@@ -169,6 +169,28 @@ public class TestService {
         assertEquals(500, res.status);
     }
 
+    @Test public void testUsagePolicyFromChristoph2() throws IOException {
+        String testUrl = "/api/validate/usage-policy";
+
+        InputStream complexUsagePolicyIS =
+                TestService.class.getClassLoader().getResourceAsStream("test/sample-data-mismatch.ttl");
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(500, res.status);
+    }
+
+    @Test public void testUsagePolicyShouldBeValid() throws IOException {
+        String testUrl = "/api/validate/usage-policy";
+
+        InputStream complexUsagePolicyIS =
+                TestService.class.getClassLoader().getResourceAsStream("test/should-be-valid.ttl");
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(500, res.status);
+    }
+
     @Test public void testInitValidation() throws IOException {
         String testUrl = "/api/validate/init";
 

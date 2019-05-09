@@ -11,8 +11,6 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.Node;
-import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.slf4j.Logger;
@@ -73,6 +71,14 @@ public class SwissKnife {
 
     }
 
+    /**
+     * Function to check whether dataControllerPolicy conforms to dataSubjectPolicy
+     *
+     * @param policyString         a String containing dataSubjectPolicy and dataControllerPolicy
+     * @param dataSubjectPolicy    Resource/URI of the dataSubjectPolicy
+     * @param dataControllerPolicy Resource/URI of the dataControllerPolicy
+     * @return true if dataControllerPolicy conform to dataSubjectPolicy
+     */
     public static boolean policyCheck(String policyString, Resource dataSubjectPolicy,
             Resource dataControllerPolicy) {
         boolean result = true;
@@ -87,22 +93,18 @@ public class SwissKnife {
                     .getResourceAsStream("usage-policy/special-integrated.ttl");
 
             OWLOntology ontology = manager.loadOntologyFromOntologyDocument(is);
+
             ontology.addAxioms(manager.loadOntologyFromOntologyDocument(specialIntegrated).axioms());
             OWLClass dataControllerCls = df.getOWLClass(IRI.create(dataControllerPolicy.getURI()));
             OWLClass dataSubjectCls = df.getOWLClass(IRI.create(dataSubjectPolicy.getURI()));
 
             OWLReasonerFactory rf = new ReasonerFactory();
             OWLReasoner r = rf.createReasoner(ontology);
-            NodeSet<OWLClass> subClasses = r.getSubClasses(dataSubjectCls);
-            Node<OWLClass> equivalentClass = r.getEquivalentClasses(dataSubjectCls);
+            OWLAxiom axiom = df.getOWLSubClassOfAxiom(dataControllerCls, dataSubjectCls);
 
-            if (!subClasses.containsEntity(dataControllerCls) && !equivalentClass.contains(dataControllerCls)) {
-                result = false;
-            }
-        } catch (OWLOntologyCreationException e) {
-            result = false;
-            log.error(e.getMessage(), e);
-        } catch (IOException e) {
+            return r.isEntailed(axiom);
+
+        } catch (Exception e) {
             result = false;
             log.error(e.getMessage(), e);
         }
