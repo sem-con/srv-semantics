@@ -99,9 +99,21 @@ scp:CurrentData rdf:type owl:Class ;
                 rdfs:subClassOf scp:Meteorology .
 
 
+###  http://w3id.org/semcon/ns/policy#Diabetes
+scp:Diabetes rdf:type owl:Class ;
+             rdfs:subClassOf svd:Health ;
+             rdfs:comment "This is an additional type of data used for MyPCH use case."@en .
+
+
+###  http://w3id.org/semcon/ns/policy#DiabetesSensor
+scp:DiabetesSensor rdf:type owl:Class ;
+                   rdfs:subClassOf scp:Diabetes .
+
+
 ###  http://w3id.org/semcon/ns/policy#EarthObservation
 scp:EarthObservation rdf:type owl:Class ;
-                     rdfs:subClassOf spl:AnyData .
+                     rdfs:subClassOf spl:AnyData ;
+                     rdfs:comment "This is an additional type of data used for Semantic Container earth observation use case."@en .
 
 
 ###  http://w3id.org/semcon/ns/policy#Forecast
@@ -122,6 +134,11 @@ scp:Gravimetry rdf:type owl:Class ;
 ###  http://w3id.org/semcon/ns/policy#HistoricalData
 scp:HistoricalData rdf:type owl:Class ;
                    rdfs:subClassOf scp:Meteorology .
+
+
+###  http://w3id.org/semcon/ns/policy#InsulinPump
+scp:InsulinPump rdf:type owl:Class ;
+                rdfs:subClassOf scp:Diabetes .
 
 
 ###  http://w3id.org/semcon/ns/policy#MagneticField
@@ -152,6 +169,65 @@ scp:RasterData rdf:type owl:Class ;
 ###  http://w3id.org/semcon/ns/policy#Seismology
 scp:Seismology rdf:type owl:Class ;
                rdfs:subClassOf scp:Geophysics .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyData
+spl:AnyData rdf:type owl:Class .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyDuration
+spl:AnyDuration rdf:type owl:Class .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyLocation
+spl:AnyLocation rdf:type owl:Class .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyProcessing
+spl:AnyProcessing rdf:type owl:Class .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose
+spl:AnyPurpose rdf:type owl:Class .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyRecipient
+spl:AnyRecipient rdf:type owl:Class .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#AnyStorage
+spl:AnyStorage rdf:type owl:Class .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#Authorization
+spl:Authorization rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasData ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasProcessing ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasPurpose ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasRecipient ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty spl:hasStorage ;
+                                                               owl:someValuesFrom owl:Thing
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] .
+
+
+###  http://www.specialprivacy.eu/langs/usage-policy#Null
+spl:Null rdf:type owl:Class .
 
 
 ###  http://www.specialprivacy.eu/vocabs/data#Activity
@@ -309,6 +385,36 @@ svdu:LegalRequirement rdf:type owl:Class ;
 ###  http://www.specialprivacy.eu/vocabs/duration#StatedPurpose
 svdu:StatedPurpose rdf:type owl:Class ;
                    rdfs:subClassOf spl:AnyDuration .
+
+
+###  http://www.specialprivacy.eu/vocabs/locations#ControllerServers
+svl:ControllerServers rdf:type owl:Class ;
+                      rdfs:subClassOf spl:AnyLocation .
+
+
+###  http://www.specialprivacy.eu/vocabs/locations#EU
+svl:EU rdf:type owl:Class ;
+       rdfs:subClassOf spl:AnyLocation .
+
+
+###  http://www.specialprivacy.eu/vocabs/locations#EULike
+svl:EULike rdf:type owl:Class ;
+           rdfs:subClassOf spl:AnyLocation .
+
+
+###  http://www.specialprivacy.eu/vocabs/locations#OtherCountries
+svl:OtherCountries rdf:type owl:Class ;
+                   rdfs:subClassOf spl:AnyLocation .
+
+
+###  http://www.specialprivacy.eu/vocabs/locations#ProcessorServers
+svl:ProcessorServers rdf:type owl:Class ;
+                     rdfs:subClassOf spl:AnyLocation .
+
+
+###  http://www.specialprivacy.eu/vocabs/locations#ThirdParty
+svl:ThirdParty rdf:type owl:Class ;
+               rdfs:subClassOf spl:AnyLocation .
 
 
 ###  http://www.specialprivacy.eu/vocabs/processing#Aggregate
@@ -512,95 +618,6 @@ svpu:Telemarketing rdf:type owl:Class ;
                    rdfs:subClassOf svpu:AnyContact .
 
 
-###  http://www.specialprivacy.eu/langs/usage-policy#AnyData
-spl:AnyData rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#AnyDuration
-spl:AnyDuration rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#AnyLocation
-spl:AnyLocation rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#AnyProcessing
-spl:AnyProcessing rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose
-spl:AnyPurpose rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#AnyRecipient
-spl:AnyRecipient rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#AnyStorage
-spl:AnyStorage rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#Authorization
-spl:Authorization rdf:type owl:Class ;
-                  owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                               owl:onProperty spl:hasData ;
-                                                               owl:someValuesFrom owl:Thing
-                                                             ]
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty spl:hasProcessing ;
-                                                               owl:someValuesFrom owl:Thing
-                                                             ]
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty spl:hasPurpose ;
-                                                               owl:someValuesFrom owl:Thing
-                                                             ]
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty spl:hasRecipient ;
-                                                               owl:someValuesFrom owl:Thing
-                                                             ]
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty spl:hasStorage ;
-                                                               owl:someValuesFrom owl:Thing
-                                                             ]
-                                                           ) ;
-                                        rdf:type owl:Class
-                                      ] .
-
-
-###  http://www.specialprivacy.eu/langs/usage-policy#Null
-spl:Null rdf:type owl:Class .
-
-
-###  http://www.specialprivacy.eu/vocabs/locations#ControllerServers
-svl:ControllerServers rdf:type owl:Class ;
-                      rdfs:subClassOf spl:AnyLocation .
-
-
-###  http://www.specialprivacy.eu/vocabs/locations#EU
-svl:EU rdf:type owl:Class ;
-       rdfs:subClassOf spl:AnyLocation .
-
-
-###  http://www.specialprivacy.eu/vocabs/locations#EULike
-svl:EULike rdf:type owl:Class ;
-           rdfs:subClassOf spl:AnyLocation .
-
-
-###  http://www.specialprivacy.eu/vocabs/locations#OtherCountries
-svl:OtherCountries rdf:type owl:Class ;
-                   rdfs:subClassOf spl:AnyLocation .
-
-
-###  http://www.specialprivacy.eu/vocabs/locations#ProcessorServers
-svl:ProcessorServers rdf:type owl:Class ;
-                     rdfs:subClassOf spl:AnyLocation .
-
-
-###  http://www.specialprivacy.eu/vocabs/locations#ThirdParty
-svl:ThirdParty rdf:type owl:Class ;
-               rdfs:subClassOf spl:AnyLocation .
-
-
 ###  http://www.specialprivacy.eu/vocabs/recipients#Delivery
 svr:Delivery rdf:type owl:Class ;
              rdfs:subClassOf spl:AnyRecipient .
@@ -636,10 +653,40 @@ svr:Unrelated rdf:type owl:Class ;
 #################################################################
 
 [ rdf:type owl:AllDisjointClasses ;
+  owl:members ( spl:AnyData
+                spl:AnyDuration
+                spl:AnyLocation
+                spl:AnyProcessing
+                spl:AnyPurpose
+                spl:AnyRecipient
+                spl:AnyStorage
+                spl:Authorization
+                spl:Null
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
   owl:members ( svdu:BusinessPractices
                 svdu:Indefinitely
                 svdu:LegalRequirement
                 svdu:StatedPurpose
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svl:ControllerServers
+                svl:ProcessorServers
+                svl:ThirdParty
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( svl:EU
+                svl:EULike
+                svl:OtherCountries
               )
 ] .
 
@@ -689,36 +736,6 @@ svr:Unrelated rdf:type owl:Class ;
 
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( spl:AnyData
-                spl:AnyDuration
-                spl:AnyLocation
-                spl:AnyProcessing
-                spl:AnyPurpose
-                spl:AnyRecipient
-                spl:AnyStorage
-                spl:Authorization
-                spl:Null
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( svl:ControllerServers
-                svl:ProcessorServers
-                svl:ThirdParty
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( svl:EU
-                svl:EULike
-                svl:OtherCountries
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
   owl:members ( svr:Delivery
                 svr:OtherRecipient
                 svr:Ours
@@ -727,13 +744,6 @@ svr:Unrelated rdf:type owl:Class ;
                 svr:Unrelated
               )
 ] .
-
-
-#[ rdf:type owl:AllDisjointProperties ;
-#  owl:members ( spl:hasDuration
-#                spl:durationInDays
-#              )
-#] .
 
 
 ###  Generated by the OWL API (version 4.5.6.2018-09-06T00:27:41Z) https://github.com/owlcs/owlapi
