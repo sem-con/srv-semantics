@@ -4,7 +4,7 @@ MAINTAINER "Christoph Fabianek" christoph@ownyourdata.eu
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY docker/ .
+COPY docker/*.jar .
 
 CMD java -jar *.jar
 

@@ -28,7 +28,7 @@ done
 
 if $BUILD_CLEAN; then
     mvn clean install
-    cp target/validation-service-1.1.1-SNAPSHOT-jar-with-dependencies.jar docker
+    cp target/validation-service-*-SNAPSHOT-jar-with-dependencies.jar docker
     docker build --no-cache -f ./docker/Dockerfile -t $REPOSITORY/$CONTAINER .
 else
     docker build -f ./docker/Dockerfile -t $REPOSITORY/$CONTAINER .
