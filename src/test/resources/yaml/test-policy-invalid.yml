@@ -1,0 +1,22 @@
+prefixes:
+  ex: 'http://example.org/'
+  wf: 'http://w3id.org/wellfort/ns/core#'
+  spl: 'http://www.specialprivacy.eu/langs/usage-policy#'
+
+DataSubjectPolicy:
+  hasData: wf:Observation; wf:Patient
+  hasProcessing: spl:AnyProcessing
+  hasPurpose: spl:AnyPurpose
+  hasRecipient: spl:AnyRecipient
+  hasStorage:
+    hasLocation: spl:AnyLocation
+    hasDuration: spl:AnyDuration
+
+DataControllerPolicy:
+  hasData: spl:AnyData
+  hasProcessing: spl:AnyProcessing
+  hasPurpose: spl:AnyPurpose
+  hasRecipient: spl:AnyRecipient
+  hasStorage:
+    hasLocation: spl:AnyLocation
+    hasDuration: spl:AnyDuration

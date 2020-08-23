@@ -290,4 +290,26 @@ public class TestService {
         }
     }
 
+    @Test public void testValidUsagePolicyFromYaml() throws IOException {
+        String testUrl = "/api/validate/usage-policy-yaml";
+
+        InputStream complexUsagePolicyIS =
+                TestService.class.getClassLoader().getResourceAsStream("yaml/test-policy.yml");
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(200, res.status);
+    }
+
+    @Test public void testInvalidUsagePolicyFromYaml() throws IOException {
+        String testUrl = "/api/validate/usage-policy-yaml";
+
+        InputStream complexUsagePolicyIS =
+                TestService.class.getClassLoader().getResourceAsStream("yaml/test-policy-invalid.yml");
+        String usagePolicyString = IOUtils.toString(complexUsagePolicyIS, "UTF-8");
+        complexUsagePolicyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(500, res.status);
+    }
+
 }

@@ -3,6 +3,7 @@ package id.semcon;
 import id.semcon.engine.DataValidationEngine;
 import id.semcon.engine.BaseValidationEngine;
 import id.semcon.engine.UsagePolicyEngine;
+import id.semcon.helper.YamlToTurtle;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +74,31 @@ public class Service {
                 JSONObject rootObject = new JSONObject(body);
                 String jsonBody = rootObject.getString(USAGE_POLICY);
                 validationResult = usagePolicyEngine.policyCheck(jsonBody);
+                if (validationResult.isEmpty()) {
+                    response.status(200);
+                }
+            } catch (Exception e) {
+                validationResult = e.getMessage();
+            }
+
+            return validationResult;
+        });
+
+        // usage policy checker
+        post("/api/validate/usage-policy-yaml", (request, response) -> {
+            // default response
+            response.status(500);
+            response.type("application/json");
+            String body = request.body();
+            log.info(request.headers().toString());
+            log.info(body);
+            String validationResult;
+            try {
+                // full json content
+                JSONObject rootObject = new JSONObject(body);
+                String jsonBody = rootObject.getString(USAGE_POLICY);
+                String turtleBody = YamlToTurtle.getModelFromYamlString(jsonBody);
+                validationResult = usagePolicyEngine.policyCheck(turtleBody);
                 if (validationResult.isEmpty()) {
                     response.status(200);
                 }
