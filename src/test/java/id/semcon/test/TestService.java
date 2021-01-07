@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -52,17 +53,20 @@ public class TestService {
         }
     }
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         Service.main(null);
         awaitInitialization();
 
     }
 
-    @AfterClass public static void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
         stop();
     }
 
-    @Test public void testHello() {
+    @Test
+    public void testHello() {
         String testUrl = "/hello";
         TestResponse res = request("GET", testUrl, null);
         assertEquals(200, res.status);
@@ -70,7 +74,8 @@ public class TestService {
         log.info(res.toString());
     }
 
-    @Test public void testUsagePolicy1() throws IOException {
+    @Test
+    public void testUsagePolicy1() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -81,7 +86,8 @@ public class TestService {
         assertEquals(200, res.status);
     }
 
-    @Test public void testUsagePolicy2() throws IOException {
+    @Test
+    public void testUsagePolicy2() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -92,7 +98,8 @@ public class TestService {
         assertEquals(500, res.status);
     }
 
-    @Test public void testUsagePolicy3() throws IOException {
+    @Test
+    public void testUsagePolicy3() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -104,7 +111,8 @@ public class TestService {
     }
 
 
-    @Test public void testUsagePolicy4() throws IOException {
+    @Test
+    public void testUsagePolicy4() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -115,7 +123,8 @@ public class TestService {
         assertEquals(200, res.status);
     }
 
-    @Test public void testUsagePolicy5() throws IOException {
+    @Test
+    public void testUsagePolicy5() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -126,7 +135,8 @@ public class TestService {
         assertEquals(500, res.status);
     }
 
-    @Test public void testUsagePolicyStorage() throws IOException {
+    @Test
+    public void testUsagePolicyStorage() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -158,7 +168,8 @@ public class TestService {
         assertEquals(500, res.status);
     }
 
-    @Test public void testUsagePolicyFromChristoph() throws IOException {
+    @Test
+    public void testUsagePolicyFromChristoph() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -169,7 +180,8 @@ public class TestService {
         assertEquals(500, res.status);
     }
 
-    @Test public void testUsagePolicyFromChristoph2() throws IOException {
+    @Test
+    public void testUsagePolicyFromChristoph2() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -180,7 +192,8 @@ public class TestService {
         assertEquals(500, res.status);
     }
 
-    @Test public void testUsagePolicyShouldBeValid() throws IOException {
+    @Test
+    public void testUsagePolicyShouldBeValid() throws IOException {
         String testUrl = "/api/validate/usage-policy";
 
         InputStream complexUsagePolicyIS =
@@ -191,7 +204,8 @@ public class TestService {
         assertEquals(500, res.status);
     }
 
-    @Test public void testInitValidation() throws IOException {
+    @Test
+    public void testInitValidation() throws IOException {
         String testUrl = "/api/validate/init";
 
         InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("init/example-init.trig");
@@ -210,7 +224,8 @@ public class TestService {
         assertEquals(200, res.status);
     }
 
-    @Test public void testZamgInitValidation() throws IOException {
+    @Test
+    public void testZamgInitValidation() throws IOException {
         String testUrl = "/api/validate/init";
 
         InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("init/zamg-init.trig");
@@ -229,7 +244,8 @@ public class TestService {
         assertEquals(200, res.status);
     }
 
-    @Test public void testZamgValidDataValidation() throws IOException {
+    @Test
+    public void testZamgValidDataValidation() throws IOException {
         String testUrl = "/api/validate/data";
 
         InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("data/zamg-data.json");
@@ -243,7 +259,8 @@ public class TestService {
         assertEquals(200, res.status);
     }
 
-    @Test public void testZamgInvalidDataValidation() throws IOException {
+    @Test
+    public void testZamgInvalidDataValidation() throws IOException {
         String testUrl = "/api/validate/data";
 
         InputStream initIS = TestService.class.getClassLoader().getResourceAsStream("data/zamg-data-invalid.json");
@@ -261,7 +278,7 @@ public class TestService {
 
         JSONObject object = new JSONObject();
         object.put(jsonKey, usagePolicyString);
-//        System.out.println(object.toString());
+        log.info(object.toString());
         return request("POST", testUrl, object.toString());
     }
 
@@ -280,7 +297,8 @@ public class TestService {
             this.body = body;
         }
 
-        @Override public String toString() {
+        @Override
+        public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append(System.lineSeparator());
             sb.append("status: ").append(status).append(System.lineSeparator());
@@ -290,7 +308,8 @@ public class TestService {
         }
     }
 
-    @Test public void testValidUsagePolicyFromYaml() throws IOException {
+    @Test
+    public void testValidUsagePolicyFromYaml() throws IOException {
         String testUrl = "/api/validate/usage-policy-yaml";
 
         InputStream complexUsagePolicyIS =
@@ -301,7 +320,8 @@ public class TestService {
         assertEquals(200, res.status);
     }
 
-    @Test public void testInvalidUsagePolicyFromYaml() throws IOException {
+    @Test
+    public void testInvalidUsagePolicyFromYaml() throws IOException {
         String testUrl = "/api/validate/usage-policy-yaml";
 
         InputStream complexUsagePolicyIS =
@@ -310,6 +330,21 @@ public class TestService {
         complexUsagePolicyIS.close();
         TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
         assertEquals(500, res.status);
+    }
+
+    @Test
+    public void testValidPolicyConversionToJSON() throws IOException {
+        String testUrl = "/api/convert/usage-policy";
+        InputStream controlIS = TestService.class.getClassLoader().getResourceAsStream("prettify/output.json");
+        String expectedOutput = IOUtils.toString(controlIS, "UTF-8");
+
+        InputStream policyIS =
+                TestService.class.getClassLoader().getResourceAsStream("prettify/policy-1.ttl");
+        String usagePolicyString = IOUtils.toString(policyIS, "UTF-8");
+        policyIS.close();
+        TestResponse res = initTestResponse(Service.USAGE_POLICY, usagePolicyString, testUrl);
+        assertEquals(200, res.status);
+        assertEquals(expectedOutput, res.body);
     }
 
 }

@@ -1,0 +1,32 @@
+{
+  "duration": [{
+    "ns": "http://www.specialprivacy.eu/vocabs/duration#",
+    "value": "StatedPurpose"
+  }],
+  "data": [{
+    "ns": "http://www.specialprivacy.eu/langs/usage-policy#",
+    "value": "AnyData"
+  }],
+  "purpose": [{
+    "ns": "http://www.specialprivacy.eu/langs/usage-policy#",
+    "value": "AnyPurpose"
+  }],
+  "recipient": [{
+    "ns": "http://www.specialprivacy.eu/langs/usage-policy#",
+    "value": "AnyRecipient"
+  }],
+  "processing": [
+    {
+      "ns": "http://www.specialprivacy.eu/vocabs/processing#",
+      "value": "Analyze"
+    },
+    {
+      "ns": "http://www.specialprivacy.eu/vocabs/processing#",
+      "value": "Copy"
+    }
+  ],
+  "location": [{
+    "ns": "http://www.specialprivacy.eu/langs/usage-policy#",
+    "value": "AnyLocation"
+  }]
+}

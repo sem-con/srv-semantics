@@ -2,6 +2,7 @@ package id.semcon;
 
 import id.semcon.engine.DataValidationEngine;
 import id.semcon.engine.BaseValidationEngine;
+import id.semcon.engine.ConvertingEngine;
 import id.semcon.engine.UsagePolicyEngine;
 import id.semcon.helper.YamlToTurtle;
 import org.json.JSONObject;
@@ -82,6 +83,28 @@ public class Service {
             }
 
             return validationResult;
+        });
+
+        // convert usage-policy
+        post("/api/convert/usage-policy", (request, response) -> {
+            // default response
+            response.status(500);
+            response.type("application/json");
+            String body = request.body();
+            log.info(request.headers().toString());
+            log.info(body);
+            String result;
+            try {
+                JSONObject rootObject = new JSONObject(body);
+                String jsonBody = rootObject.getString(USAGE_POLICY);
+                // passing full trig content
+                result = ConvertingEngine.transform(jsonBody);
+                response.status(200);
+            } catch (Exception e) {
+                result = "{\"error\": \"" + e.getMessage() + "\"}";
+            }
+
+            return result;
         });
 
         // usage policy checker
